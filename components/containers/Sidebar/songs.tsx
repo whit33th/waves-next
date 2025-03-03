@@ -6,7 +6,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 export default function Songs() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const currentSection = searchParams?.get("section");
+  const currentSection = searchParams.get("section");
 
   const sections = [
     { id: 1, name: "Favorites" },
@@ -16,10 +16,10 @@ export default function Songs() {
   ];
 
   return (
-    <Suspense fallback={<div>Loading</div>}>
-      <div className="flex h-screen w-64 flex-col justify-between gap-y-2">
-        <div className="flex justify-between gap-4 border-b border-[--border] px-4 py-4">
-          {sections.map((section) => (
+    <div className="flex h-screen w-64 flex-col justify-between gap-y-2">
+      <div className="flex justify-between gap-4 border-b border-[--border] px-4 py-4">
+        {sections.map((section) => (
+          <Suspense fallback={<div>Loading</div>}>
             <button
               key={section.id}
               onClick={() => {
@@ -33,34 +33,34 @@ export default function Songs() {
             >
               {section.name}
             </button>
-          ))}
-        </div>
-        <div className="flex max-h-screen flex-col gap-y-1.5 overflow-y-auto px-4">
-          {Array.from({ length: 15 }).map((_, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-between rounded-xl px-2 py-1 transition hover:bg-neutral-800"
-            >
-              <Image
-                className="aspect-square rounded-lg"
-                src={"/img/albums/arcane.png"}
-                alt="song"
-                width={35}
-                height={35}
-              />
-              <div className="flex flex-col gap-1">
-                <h3 className="max-w-[16ch] truncate text-sm">
-                  Paint The Town To Blue
-                </h3>
-                <p className="text-xs text-neutral-500">Arcane</p>
-              </div>
-              <div>
-                <p className="text-xs text-neutral-500">4:13</p>
-              </div>
-            </div>
-          ))}
-        </div>
+          </Suspense>
+        ))}
       </div>
-    </Suspense>
+      <div className="flex max-h-screen flex-col gap-y-1.5 overflow-y-auto px-4">
+        {Array.from({ length: 15 }).map((_, index) => (
+          <div
+            key={index}
+            className="flex items-center justify-between rounded-xl px-2 py-1 transition hover:bg-neutral-800"
+          >
+            <Image
+              className="aspect-square rounded-lg"
+              src={"/img/albums/arcane.png"}
+              alt="song"
+              width={35}
+              height={35}
+            />
+            <div className="flex flex-col gap-1">
+              <h3 className="max-w-[16ch] truncate text-sm">
+                Paint The Town To Blue
+              </h3>
+              <p className="text-xs text-neutral-500">Arcane</p>
+            </div>
+            <div>
+              <p className="text-xs text-neutral-500">4:13</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
