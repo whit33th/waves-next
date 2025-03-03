@@ -1,3 +1,4 @@
+'use client'
 import { useSearchParams } from "next/navigation";
 import SearchResultSection from "@/components/containers/SearchResults/SearchResultSection";
 

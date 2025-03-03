@@ -6,6 +6,7 @@ import Sidebar from "@/components/containers/Sidebar/sidebar";
 
 const robotoSans = Roboto({
   weight: ["300", "400", "500", "700"],
+  subsets: ["cyrillic", "greek", "latin"],
 });
 
 export const metadata: Metadata = {

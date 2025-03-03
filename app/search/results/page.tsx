@@ -1,3 +1,4 @@
+
 import { Suspense } from 'react';
 import SearchResultSection from '@/components/containers/SearchResults/SearchResultSection';
 import { mockSearchResults } from '@/data/mockSearchResults';
