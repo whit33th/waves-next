@@ -66,7 +66,7 @@ const playlists = [
 
 export default function LibraryPage() {
   return (
-    <div className="h-full space-y-6  p-6">
+    <div className="h-full space-y-6 p-6">
       <header className="pb-6">
         <h1 className="text-3xl font-bold">Your Library</h1>
       </header>

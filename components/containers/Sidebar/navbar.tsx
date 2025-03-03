@@ -1,5 +1,14 @@
 import VibeMeter from "@/components/UI/widgets/bpmMeter";
-import { Home, Library, Heart, Mic, TrendingUp, Flame, Podcast, Radio } from "lucide-react";
+import {
+  Home,
+  Library,
+  Heart,
+  Mic,
+  TrendingUp,
+  Flame,
+  Podcast,
+  Radio,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";

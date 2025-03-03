@@ -47,7 +47,7 @@ export default function MusicApp() {
   return (
     <div className="p-5">
       <h1 className="mb-4 text-2xl font-bold">Музыкальное приложение</h1>
-      
+
       {/* Форма для загрузки файла */}
       <input
         type="file"

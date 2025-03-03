@@ -15,8 +15,8 @@ const MusicItem = ({
   imageUrl,
   type = "album",
 }: MusicItemProps) => (
-  <div className="bg-card/40 hover:bg-card/60 group relative  rounded-xl p-4 transition-all">
-    <div className="relative aspect-square  rounded-lg">
+  <div className="bg-card/40 hover:bg-card/60 group relative rounded-xl p-4 transition-all">
+    <div className="relative aspect-square rounded-lg">
       <Image
         src={imageUrl}
         alt={title}
