@@ -11,9 +11,7 @@ export default function Search() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      router.push(
-        `/search/results?q=${encodeURIComponent(searchQuery.trim())}`,
-      );
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
     }
   };
 
@@ -26,7 +24,9 @@ export default function Search() {
         placeholder="Search Music"
         className="w-full"
         value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setSearchQuery(e.target.value)
+        }
       />
       <div className="hidden gap-2 sm:flex">
         <DefaultBtn text="Travis Scott" />

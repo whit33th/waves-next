@@ -15,15 +15,15 @@ const MusicItem = ({
   imageUrl,
   type = "album",
 }: MusicItemProps) => (
-  <div className="bg-card/40 hover:bg-card/60 group relative rounded-xl p-4 transition-all">
+  <div className="bg-card/40 hover:bg-card/60 group relative rounded-xl p-4 transition-all hover:scale-105">
     <div className="relative aspect-square rounded-lg">
       <Image
         src={imageUrl}
         alt={title}
         fill
-        className="object-cover transition-all group-hover:scale-105"
+        className="object-cover transition-all"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
       <div className="absolute bottom-2 right-2 flex gap-2">
         <button className="rounded-full bg-white/10 p-2 backdrop-blur-md transition-transform hover:scale-105">
           <Heart className="h-5 w-5" />

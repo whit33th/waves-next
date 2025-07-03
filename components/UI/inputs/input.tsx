@@ -2,10 +2,11 @@ import { Search } from "lucide-react";
 import React from "react";
 
 interface IInput {
-  placeholder?: string;
+  placeholder: string;
   className?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
-
 export default function Input({
   placeholder = "Search",
   className,

@@ -1,4 +1,11 @@
+import Back from "@/components/UI/buttons/backBtn";
 import VibeMeter from "@/components/UI/widgets/bpmMeter";
+import {
+  SignedIn,
+  SignedOut,
+  SignOutButton,
+  SignUpButton,
+} from "@clerk/nextjs";
 import {
   Home,
   Library,
@@ -50,7 +57,7 @@ export default function Navbar() {
     <div className="flex h-full flex-col items-center justify-between gap-y-2 border-r border-[--border] p-2">
       <div className="flex flex-col gap-y-4">
         <VibeMeter />
-        {/* <Back /> */}
+        <Back />
       </div>
 
       {NavMenu}

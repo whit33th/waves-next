@@ -12,6 +12,8 @@ export default function MusicApp() {
   const [file, setFile] = useState<File | null>(null);
   const userId = "user-id"; // Здесь указывается ID пользователя
 
+  console.log(tracks)
+  
   useEffect(() => {
     // Загружаем все треки при монтировании компонента
     const fetchTracks = async () => {

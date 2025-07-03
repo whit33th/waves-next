@@ -51,7 +51,10 @@ export default function SearchResultSection({
 
     // Updated card layout for Albums, Artists, and Playlists
     return (
-      <Link href={''} className="group flex items-center gap-4 rounded-xl bg-white/5 p-3 transition-all hover:bg-white/10 sm:block sm:p-4">
+      <Link
+        href={""}
+        className="group flex items-center gap-4 rounded-xl bg-white/5 p-3 transition-all hover:bg-white/10 sm:block sm:p-4"
+      >
         <div className="relative aspect-square h-[72px] w-[72px] flex-shrink-0 overflow-hidden sm:h-auto sm:w-full">
           <Image
             src={item.image}

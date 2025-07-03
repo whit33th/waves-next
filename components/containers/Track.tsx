@@ -1,11 +1,22 @@
 "use client";
-import { Plus, Play, Clock, Check, Star, MoreHorizontal } from "lucide-react";
+import { useAudioStore } from "@/helpers/data/globalState/AudioStore";
+import usePlayer from "@/helpers/hooks/Player/usePlayer";
+import {
+  Plus,
+  Play,
+  Clock,
+  Check,
+  Star,
+  MoreHorizontal,
+  Pause,
+} from "lucide-react";
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 // import { usePlayer } from "@/hooks/usePlayer"; // Assuming you have this hook
 // import { useLibrary } from "@/hooks/useLibrary"; // Assuming you have this hook
 
 interface TrendingTrackProps {
+  src: string;
   position: number;
   title: string;
   artist: string;
@@ -24,6 +35,7 @@ export const Track = ({
   plays = 60000,
   duration,
   imageUrl = "/img/albums/arcane.png",
+  src,
   trackId,
   initialAdded = false,
   initialFavorite = false,
@@ -35,13 +47,19 @@ export const Track = ({
   const [openUpward, setOpenUpward] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
-  //   const { playTrack } = usePlayer();
-  //   const { addToLibrary, removeFromLibrary, toggleFavorite } = useLibrary();
 
-  const handlePlay = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    // playTrack(trackId);
-  };
+  const { handlePlay, isCurrentlyPlaying } = usePlayer(src);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleAddToLibrary = async (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -68,17 +86,6 @@ export const Track = ({
       // Here you might want to show a toast notification
     }
   };
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setIsMenuOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   const handleMenuOpen = () => {
     if (menuButtonRef.current) {
@@ -116,7 +123,11 @@ export const Track = ({
             onClick={handlePlay}
             className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-all group-hover:opacity-100"
           >
-            <Play fill="white" size={20} />
+            {!isCurrentlyPlaying ? (
+              <Play fill="white" size={20} />
+            ) : (
+              <Pause fill="white" size={20} />
+            )}
           </button>
         </div>
         <div className="flex items-center gap-3">

@@ -16,10 +16,10 @@ export default function Songs() {
   ];
 
   return (
-    <div className="flex h-screen w-64 flex-col justify-between gap-y-2">
+    <div className="flex h-screen w-64 flex-col gap-y-2">
       <div className="flex justify-between gap-4 border-b border-[--border] px-4 py-4">
         {sections.map((section) => (
-          <Suspense fallback={<div>Loading</div>}>
+          <Suspense key={section.id} fallback={<div>Loading</div>}>
             <button
               key={section.id}
               onClick={() => {
@@ -37,7 +37,7 @@ export default function Songs() {
         ))}
       </div>
       <div className="flex max-h-screen flex-col gap-y-1.5 overflow-y-auto px-4">
-        {Array.from({ length: 15 }).map((_, index) => (
+        {Array.from({ length: 25 }).map((_, index) => (
           <div
             key={index}
             className="flex items-center justify-between rounded-xl px-2 py-1 transition hover:bg-neutral-800"

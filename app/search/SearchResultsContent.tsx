@@ -1,6 +1,6 @@
 "use client";
 import SearchResultSection from "@/components/containers/SearchResults/SearchResultSection";
-import { mockSearchResults } from "@/data/mockSearchResults";
+import { mockSearchResults } from "@/helpers/data/mockSearchResults";
 
 export default function SearchResultsContent({
   searchQuery,
