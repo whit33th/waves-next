@@ -1,24 +1,8 @@
 import Back from "@/components/UI/buttons/backBtn";
 import VibeMeter from "@/components/UI/widgets/bpmMeter";
-import {
-  SignedIn,
-  SignedOut,
-  SignOutButton,
-  SignUpButton,
-} from "@clerk/nextjs";
-import {
-  Home,
-  Library,
-  Heart,
-  Mic,
-  TrendingUp,
-  Flame,
-  Podcast,
-  Radio,
-} from "lucide-react";
+import { Flame, Home, Library, Podcast, Radio } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 const Links = [
   { icon: <Home size={20} />, label: "Home", href: "/" },

@@ -3,8 +3,8 @@ import { PlayerContext } from "@/contexts/PlayerContext";
 import { SongItemProps } from "@/helpers/constants/Interfaces/song";
 import { Pause, Play } from "lucide-react";
 import Image from "next/image";
-import { useContext } from "react";
 import Link from "next/link";
+import { useContext } from "react";
 
 export default function SongItem({ song }: { song: SongItemProps }) {
   const { setTrack, track, handlePlayChosen, isPlaying } =

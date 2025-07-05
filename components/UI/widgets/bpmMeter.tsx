@@ -1,7 +1,7 @@
 "use client";
 
-import { type FC, useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { type FC, useEffect, useState } from "react";
 
 interface VibeMeterProps {
   bpm?: number;

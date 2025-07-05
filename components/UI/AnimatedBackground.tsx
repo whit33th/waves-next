@@ -1,8 +1,9 @@
 "use client";
 import { PlayerContext } from "@/contexts/PlayerContext";
+import { musicList } from "@/helpers/data/musicData";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { Suspense, useContext } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useContext } from "react";
 
 export default function AnimatedBackground() {
   const { track } = useContext(PlayerContext);
@@ -17,7 +18,7 @@ export default function AnimatedBackground() {
         className="absolute inset-0 z-[-1] overflow-hidden"
       >
         <Image
-          src={track.image ?? "/placeholder-cover.png"}
+          src={track.image ?? musicList[0].image}
           alt="background"
           width={150}
           height={150}

@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 interface WriteEffectTextProps {
   text: string;
@@ -47,9 +47,9 @@ export default function WriteEffectText({
       animate={{ scale: 1 }}
       transition={{
         type: "spring",
-        stiffness: 300,
-        damping: 13,
-        duration: 0.6,
+        stiffness: 250,
+        damping: 12,
+        duration: 0.8,
       }}
       key={result.length}
       className="inline-block w-full"

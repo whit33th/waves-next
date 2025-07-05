@@ -24,8 +24,11 @@ export function VolumeControl({ onMute }: VolumeControlProps) {
 
   return (
     <div className="flex items-center justify-center gap-2">
-      <button onClick={onMute}>
-        <VolumeIcon className="text-neutral-300" />
+      <button
+        className="text-neutral-300/60 transition hover:opacity-80"
+        onClick={onMute}
+      >
+        <VolumeIcon />
       </button>
       <div className="relative h-1 w-24 rounded-full bg-neutral-100/20 md:w-32">
         <div

@@ -1,9 +1,9 @@
 import AnimatedBackground from "@/components/UI/AnimatedBackground";
+import { Suspense } from "react";
 import Controller from "../Controller/controller";
 import Search from "../Search/Search";
 import Navbar from "./navbar";
 import Songs from "./songs";
-import { Suspense } from "react";
 
 export default function Sidebar({ children }: React.PropsWithChildren) {
   return (

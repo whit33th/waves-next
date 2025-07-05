@@ -1,13 +1,5 @@
 "use client";
-import {
-  Check,
-  Clock,
-  MoreHorizontal,
-  Pause,
-  Play,
-  Plus,
-  Star,
-} from "lucide-react";
+import { Check, Clock, MoreHorizontal, Plus, Star } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 

@@ -1,6 +1,6 @@
 "use client";
 import { PlayerContext } from "@/contexts/PlayerContext";
-import React, { useContext } from "react";
+import { useContext } from "react";
 
 export default function DurationRange() {
   const { durationBodyRef, durationRef, time, audioRef, handleSeek } =
@@ -9,7 +9,7 @@ export default function DurationRange() {
   return (
     <div className="w-full">
       <div className="flex items-center gap-2">
-        <span className="min-w-10 text-center text-xs text-neutral-400 tabular-nums">
+        <span className="min-w-[4ch] text-center text-xs text-neutral-400 tabular-nums">
           {time.current.minute}:
           {time.current.second.toString().padStart(2, "0")}
         </span>
@@ -29,7 +29,7 @@ export default function DurationRange() {
             className="absolute h-full w-full cursor-pointer opacity-0"
           />
         </div>
-        <span className="min-w-10 text-center text-xs text-neutral-400 tabular-nums">
+        <span className="min-w-[4ch] text-center text-xs text-neutral-400 tabular-nums">
           {time.duration.minute}:
           {time.duration.second.toString().padStart(2, "0")}
         </span>

@@ -17,7 +17,7 @@ export const musicList: SongItemProps[] = [
     album: "Скучаю, Но работаю",
     genre: "Rap",
     filePath: "/music/сердце.mp3",
-    image: "/img/albums/скучаю.png",
+    image: "/img/albums/скучаю.webp",
   },
   {
     id: 3,

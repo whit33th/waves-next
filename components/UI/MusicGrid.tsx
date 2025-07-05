@@ -1,5 +1,4 @@
-import React from "react";
-import { Play, Heart } from "lucide-react";
+import { Heart, Play } from "lucide-react";
 import Image from "next/image";
 
 interface MusicItemProps {
@@ -24,7 +23,7 @@ const MusicItem = ({
         className="object-cover transition-all"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-      <div className="absolute bottom-2 right-2 flex gap-2">
+      <div className="absolute right-2 bottom-2 flex gap-2">
         <button className="rounded-full bg-white/10 p-2 backdrop-blur-md transition-transform hover:scale-105">
           <Heart className="h-5 w-5" />
         </button>
