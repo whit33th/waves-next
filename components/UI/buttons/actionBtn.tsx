@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { LucideIcon } from "lucide-react";
 
@@ -16,7 +17,7 @@ export default function ActionBtn({
 }: DefaultBtnProps) {
   return (
     <button
-      className={`${className} flex items-center justify-center gap-2 text-nowrap rounded-[10px] bg-[--button] p-2 px-3 text-xs font-medium text-neutral-800 shadow transition hover:opacity-80`}
+      className={`${className} bg-button flex items-center justify-center gap-2 rounded-[10px] p-2 px-3 text-xs font-medium text-nowrap text-neutral-800 shadow transition hover:opacity-80`}
       {...props}
     >
       {Icon && <Icon size={16} />}

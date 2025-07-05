@@ -54,7 +54,7 @@ const Logo = (
 );
 export default function Navbar() {
   return (
-    <div className="flex h-full flex-col items-center justify-between gap-y-2 border-r border-[--border] p-2">
+    <div className="border-border flex h-full flex-col items-center justify-between gap-y-2 border-r p-2">
       <div className="flex flex-col gap-y-4">
         <VibeMeter />
         <Back />

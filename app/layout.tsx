@@ -1,9 +1,9 @@
+import Audio from "@/components/containers/audio";
 import Sidebar from "@/components/containers/Sidebar/sidebar";
-import { ClerkProvider } from "@clerk/nextjs";
+import PlayerContextProvider from "@/contexts/PlayerContext";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
-import PlayerContextProvider from "@/contexts/PlayerContext";
 
 const robotoSans = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -21,15 +21,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // <ClerkProvider>
     <html lang="en">
-      <PlayerContextProvider>
-        <body className={`${robotoSans.className} antialiased`}>
+      <body className={`${robotoSans.className} antialiased`}>
+        <PlayerContextProvider>
           <Sidebar>{children}</Sidebar>
-          <audio src="" preload="auto" />
-        </body>
-      </PlayerContextProvider>
+          <Audio />
+        </PlayerContextProvider>
+      </body>
     </html>
-    // </ClerkProvider>
   );
 }

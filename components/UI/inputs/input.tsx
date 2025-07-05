@@ -1,3 +1,4 @@
+"use client";
 import { Search } from "lucide-react";
 import React from "react";
 
@@ -19,7 +20,7 @@ export default function Input({
       <Search className="text-neutral-500" width={18} />
       <input
         placeholder={placeholder}
-        className="transition-color h-full w-full bg-transparent p-2 outline-none duration-300 group-hover:text-neutral-200"
+        className="transition-color h-full w-full bg-transparent p-2 duration-300 outline-none group-hover:text-neutral-200"
         type="text"
         {...props}
       />

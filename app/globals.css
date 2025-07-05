@@ -1,23 +1,20 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-:root {
+@theme {
   --background: #080808;
   --foreground: #ededed;
 
-  /* Основные цвета */
-  --primary: #ffcf01; /* Ярко-желтый цвет для прогресс-бара и акцентов */
-  --secondary: #f037a5; /* Розовый цвет с изображения */
-  --dark: #121212;
-  --border: #121212; /* Очень темный фон */
-  --darker: #080808; /* Еще более темный фон для боковой панели */
-  --light-dark: #242424; /* Чуть светлее для карточек и элементов */
-  --text-primary: #ffffff; /* Белый текст */
-  --text-secondary: #b3b3b3; /* Серый текст для второстепенной информации */
-  --light-hover: #2a2a2a; /* Цвет при наведении */
-  --button: #ffcf01; /* Желтый для кнопок */
-  --button-text: #000000; /* Черный текст на кнопках */
+  --color-primary: #ffcf01;
+  --color-secondary: #f037a5;
+  --color-dark: #121212;
+  --color-border: #121212;
+  --color-darker: #080808;
+  --color-light-dark: #242424;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #b3b3b3;
+  --color-light-hover: #2a2a2a;
+  --color-button: #ffcf01;
+  --color-button-text: #000000;
 }
 
 @layer base {
@@ -72,6 +69,22 @@
   }
 }
 
+@keyframes wave {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.1) rotate(8deg);
+  }
+  50% {
+    transform: scale(1.05) rotate(15deg);
+  }
+  75% {
+    transform: scale(1.15) rotate(3deg);
+  }
+}
+
 .animate-slide-up {
   animation: slide-up 0.2s ease-out;
 }
@@ -88,9 +101,16 @@
   animation: fade-in-up 0.15s ease-out;
 }
 
+.animate-wave {
+  animation: wave 8s ease-in-out infinite;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
+}
+button {
+  cursor: pointer;
 }
 
 ::-webkit-scrollbar {
