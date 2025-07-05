@@ -1,4 +1,6 @@
-export const musicList = [
+import { SongItemProps } from "../constants/Interfaces/song";
+
+export const musicList: SongItemProps[] = [
   {
     id: 1,
     title: "Прощай :(",
@@ -10,12 +12,12 @@ export const musicList = [
   },
   {
     id: 2,
-    title: "Breaking Chains",
-    artist: "Steel Thunder",
-    album: "Rise Above",
-    genre: "Rock",
-    filePath: "/music/2.mp3",
-    image: "/img/albums/ogbuda.png",
+    title: "Сердце ᐸ/3 Время",
+    artist: "Og Buda",
+    album: "Скучаю, Но работаю",
+    genre: "Rap",
+    filePath: "/music/сердце.mp3",
+    image: "/img/albums/скучаю.png",
   },
   {
     id: 3,

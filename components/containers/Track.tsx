@@ -1,19 +1,15 @@
 "use client";
-import { useAudioStore } from "@/helpers/data/globalState/AudioStore";
-import usePlayer from "@/helpers/hooks/Player/usePlayer";
 import {
-  Plus,
-  Play,
-  Clock,
   Check,
-  Star,
+  Clock,
   MoreHorizontal,
   Pause,
+  Play,
+  Plus,
+  Star,
 } from "lucide-react";
 import Image from "next/image";
-import { useState, useRef, useEffect } from "react";
-// import { usePlayer } from "@/hooks/usePlayer"; // Assuming you have this hook
-// import { useLibrary } from "@/hooks/useLibrary"; // Assuming you have this hook
+import { useEffect, useRef, useState } from "react";
 
 interface TrendingTrackProps {
   src: string;
@@ -47,8 +43,6 @@ export const Track = ({
   const [openUpward, setOpenUpward] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
-
-  const { handlePlay, isCurrentlyPlaying } = usePlayer(src);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -120,14 +114,14 @@ export const Track = ({
             className="rounded object-cover"
           />
           <button
-            onClick={handlePlay}
+            // onClick={handlePlay}
             className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-all group-hover:opacity-100"
           >
-            {!isCurrentlyPlaying ? (
+            {/* {!isCurrentlyPlaying ? (
               <Play fill="white" size={20} />
             ) : (
               <Pause fill="white" size={20} />
-            )}
+            )} */}
           </button>
         </div>
         <div className="flex items-center gap-3">

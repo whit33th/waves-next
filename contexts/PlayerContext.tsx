@@ -27,6 +27,7 @@ interface IPlayerContextType {
   progress?: number;
   volumeRef: React.RefObject<HTMLInputElement | null>;
   volume: number;
+  handlePlayChosen: (track: (typeof musicList)[0]) => void;
 }
 
 export const PlayerContext = createContext<IPlayerContextType>(
@@ -64,6 +65,14 @@ function PlayerContextProvider(props: { children: React.ReactNode }) {
       audioRef.current.pause();
       setIsPlaying(false);
     }
+  }
+  function handlePlayChosen(song: (typeof musicList)[0]) {
+    if (song.id === track.id && isPlaying) {
+      pause();
+      return;
+    }
+    setTrack(song);
+    play();
   }
 
   async function nextTrack() {
@@ -171,6 +180,7 @@ function PlayerContextProvider(props: { children: React.ReactNode }) {
     handleVolumeChange,
     volumeRef,
     volume,
+    handlePlayChosen,
   };
   return (
     <PlayerContext.Provider value={contextValues}>
