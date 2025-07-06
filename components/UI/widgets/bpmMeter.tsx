@@ -47,9 +47,9 @@ const VibeMeter: FC<VibeMeterProps> = ({ bpm = 220 }) => {
   };
 
   const { color, glow } = getVibeData(animatedBPM);
-  const arcProgress = (animatedBPM / 220) * 251.32; // Длина дуги круга
-  const glowIntensity = animatedBPM / 220; // Интенсивность свечения
-  const animationSpeed = 60 / (animatedBPM || 60); // Время пульсации
+  const arcProgress = (animatedBPM / 220) * 251.32;
+  const glowIntensity = animatedBPM / 220;
+  const animationSpeed = 60 / (animatedBPM || 60); // Pulse timing
 
   return (
     <motion.div
@@ -61,7 +61,6 @@ const VibeMeter: FC<VibeMeterProps> = ({ bpm = 220 }) => {
       transition={{ duration: 0.3, ease: "easeOut" }}
       whileHover={{ scale: 1.1 }}
     >
-      {/* Пульсирующий неоновый фон */}
       <motion.div
         className={`absolute inset-0 bg-gradient-to-br ${color} opacity-20 blur-lg`}
         animate={{
@@ -74,7 +73,6 @@ const VibeMeter: FC<VibeMeterProps> = ({ bpm = 220 }) => {
         }}
       ></motion.div>
 
-      {/* BPM текст */}
       <motion.div
         className="z-10 text-center"
         animate={{
@@ -89,12 +87,9 @@ const VibeMeter: FC<VibeMeterProps> = ({ bpm = 220 }) => {
         <motion.div className="text-xs font-bold text-white">
           {animatedBPM}
         </motion.div>
-        {/* <div className="text-xs font-medium text-gray-400">bpm</div> */}
       </motion.div>
 
-      {/* SVG-круг с динамической дугой */}
       <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100">
-        {/* Тонкая фонова линия */}
         <circle
           cx="50"
           cy="50"
@@ -104,7 +99,6 @@ const VibeMeter: FC<VibeMeterProps> = ({ bpm = 220 }) => {
           strokeWidth="2"
         />
 
-        {/* Анимированный градиентный контур */}
         <motion.circle
           cx="50"
           cy="50"
@@ -118,7 +112,7 @@ const VibeMeter: FC<VibeMeterProps> = ({ bpm = 220 }) => {
           className="transition-all duration-500 ease-out"
           animate={{
             filter: `drop-shadow(0px 0px ${10 + glowIntensity * 20}px ${glow})`,
-            strokeWidth: [3, 4, 3], // Изменяем толщину для эффекта пульсации
+            strokeWidth: [3, 4, 3],
           }}
           transition={{
             duration: animationSpeed,
@@ -126,7 +120,6 @@ const VibeMeter: FC<VibeMeterProps> = ({ bpm = 220 }) => {
             repeatType: "reverse",
           }}
         />
-        {/* Градиент для круга */}
         <defs>
           <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor={glow} />

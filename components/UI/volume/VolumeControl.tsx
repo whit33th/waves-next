@@ -1,5 +1,5 @@
 "use client";
-import { PlayerContext } from "@/contexts/PlayerContext";
+import { PlayerContext } from "@/contexts/PlayerContext/PlayerContext";
 import { Volume, Volume1, Volume2, VolumeOff } from "lucide-react";
 import { useContext } from "react";
 
@@ -10,7 +10,7 @@ interface VolumeControlProps {
 export function VolumeControl({ onMute }: VolumeControlProps) {
   const { handleVolumeChange, volumeRef, volume } = useContext(PlayerContext);
 
-  const volumeValue = volume * 100;
+  const volumeValue = volume;
   const VolumeIcon =
     volumeValue === 0
       ? VolumeOff
@@ -20,7 +20,7 @@ export function VolumeControl({ onMute }: VolumeControlProps) {
           ? Volume1
           : Volume2;
 
-  console.log("VolumeControl rendered with volume:", volume * 100);
+  console.log("VolumeControl rendered with volume:", volume);
 
   return (
     <div className="flex items-center justify-center gap-2">
@@ -32,7 +32,7 @@ export function VolumeControl({ onMute }: VolumeControlProps) {
       </button>
       <div className="relative h-1 w-24 rounded-full bg-neutral-100/20 md:w-32">
         <div
-          className={`bg-primary z-10 h-full rounded-full`}
+          className={`z-10 h-full rounded-full bg-white`}
           style={{ width: `${volumeValue}%` }}
         />
 

@@ -1,5 +1,6 @@
 "use client";
 import { musicList } from "@/helpers/data/musicData";
+import { usePathname, useRouter } from "next/navigation";
 import { createContext, useEffect, useRef, useState } from "react";
 
 interface IPlayerContextType {
@@ -28,6 +29,8 @@ interface IPlayerContextType {
   volumeRef: React.RefObject<HTMLInputElement | null>;
   volume: number;
   handlePlayChosen: (track: (typeof musicList)[0]) => void;
+  setIsMaximized: (value: boolean) => void;
+  isMaximized: boolean;
 }
 
 export const PlayerContext = createContext<IPlayerContextType>(
@@ -46,6 +49,7 @@ function PlayerContextProvider(props: { children: React.ReactNode }) {
     current: { second: 0, minute: 0 },
     duration: { second: 0, minute: 0 },
   });
+  const [isMaximized, setIsMaximized] = useState(false);
   const [volume, setVolume] = useState(50);
 
   async function play() {
@@ -85,7 +89,7 @@ function PlayerContextProvider(props: { children: React.ReactNode }) {
 
   function previousTrack() {
     const currentIndex = musicList.findIndex((item) => item.id === track.id);
-    if (audioRef.current!.currentTime > 10) {
+    if (audioRef.current!.currentTime > 10 || currentIndex === 0) {
       audioRef.current!.currentTime = 0;
     } else if (currentIndex > 0) {
       setTrack(musicList[currentIndex - 1]);
@@ -97,14 +101,13 @@ function PlayerContextProvider(props: { children: React.ReactNode }) {
       const seekTime =
         (Number(e.target.value) / 100) * audioRef.current.duration;
       audioRef.current.currentTime = seekTime;
-      play();
     }
   };
   function handleVolumeChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (audioRef.current) {
       const volume = Number(e.target.value) / 100;
       audioRef.current.volume = volume;
-      setVolume(volume);
+      setVolume(volume * 100);
       if (volumeRef.current) {
         volumeRef.current.value = String(volume * 100);
       }
@@ -161,6 +164,10 @@ function PlayerContextProvider(props: { children: React.ReactNode }) {
       };
     }
   }, [track]);
+  const pathname = usePathname();
+  useEffect(() => {
+    setIsMaximized(false);
+  }, [pathname]);
 
   const contextValues = {
     audioRef,
@@ -181,6 +188,8 @@ function PlayerContextProvider(props: { children: React.ReactNode }) {
     volumeRef,
     volume,
     handlePlayChosen,
+    setIsMaximized,
+    isMaximized,
   };
   return (
     <PlayerContext.Provider value={contextValues}>

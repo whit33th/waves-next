@@ -7,6 +7,7 @@ interface IInput {
   className?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onFocus?: () => void;
 }
 export default function Input({
   placeholder = "Search",
@@ -15,12 +16,12 @@ export default function Input({
 }: IInput) {
   return (
     <div
-      className={`group flex items-center gap-2 rounded-full text-sm ${className}`}
+      className={`group flex items-center gap-2 rounded-full px-6 text-sm ${className}`}
     >
       <Search className="text-neutral-500" width={18} />
       <input
         placeholder={placeholder}
-        className="transition-color h-full w-full bg-transparent p-2 duration-300 outline-none group-hover:text-neutral-200"
+        className="transition-color h-full w-full bg-transparent py-8 duration-300 outline-none group-hover:text-neutral-200"
         type="text"
         {...props}
       />

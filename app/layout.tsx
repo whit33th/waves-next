@@ -1,6 +1,6 @@
 import Audio from "@/components/containers/audio";
 import Sidebar from "@/components/containers/Sidebar/sidebar";
-import PlayerContextProvider from "@/contexts/PlayerContext";
+import PlayerContextProvider from "@/contexts/PlayerContext/PlayerContext";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";

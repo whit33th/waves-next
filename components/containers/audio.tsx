@@ -1,6 +1,6 @@
 "use client";
 
-import { PlayerContext } from "@/contexts/PlayerContext";
+import { PlayerContext } from "@/contexts/PlayerContext/PlayerContext";
 import { useContext } from "react";
 
 export default function Audio() {

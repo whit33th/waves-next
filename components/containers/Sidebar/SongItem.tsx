@@ -1,28 +1,43 @@
 "use client";
-import { PlayerContext } from "@/contexts/PlayerContext";
+import { PlayerContext } from "@/contexts/PlayerContext/PlayerContext";
 import { SongItemProps } from "@/helpers/constants/Interfaces/song";
 import { Pause, Play } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useContext } from "react";
 
-export default function SongItem({ song }: { song: SongItemProps }) {
+interface SongItemPropsWithIndex {
+  song: SongItemProps;
+  index?: number;
+  isCurrentlyPlaying?: boolean;
+}
+
+export default function SongItem({
+  song,
+  index,
+  isCurrentlyPlaying,
+}: SongItemPropsWithIndex) {
   const { setTrack, track, handlePlayChosen, isPlaying } =
     useContext(PlayerContext);
 
   const isCurrentTrack = track?.id === song.id;
+  const showAsPlaying = isCurrentlyPlaying || isCurrentTrack;
+
+  const handlePlay = () => {
+    handlePlayChosen(song);
+  };
 
   return (
     <div
-      onDoubleClick={() => handlePlayChosen(song)}
-      className={`group flex cursor-pointer items-center justify-between p-2 transition select-none hover:bg-neutral-900 ${
-        isCurrentTrack ? "bg-neutral-800" : ""
+      onDoubleClick={handlePlay}
+      className={`group flex cursor-pointer items-center justify-between rounded-lg p-2 transition select-none hover:bg-neutral-900 ${
+        showAsPlaying ? "bg-neutral-800" : ""
       }`}
     >
-      <div className="flex gap-4">
+      <div className="flex min-w-0 flex-1 gap-4">
         <div
-          onClick={() => handlePlayChosen(song)}
-          className="relative flex h-10 w-10 items-center justify-center"
+          onClick={handlePlay}
+          className="relative flex h-10 w-10 flex-shrink-0 items-center justify-center"
         >
           <Image
             className="aspect-square rounded object-cover"
@@ -32,30 +47,30 @@ export default function SongItem({ song }: { song: SongItemProps }) {
             height={40}
           />
           <button className="absolute top-1/2 left-1/2 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/75 text-neutral-900 opacity-0 transition *:fill-current group-hover:opacity-100">
-            {isCurrentTrack && isPlaying ? (
+            {showAsPlaying && isPlaying ? (
               <Pause size={16} />
             ) : (
               <Play size={16} />
             )}
           </button>
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex min-w-0 flex-1 flex-col gap-1">
           <h3
-            className={`max-w-[16ch] truncate text-sm ${
-              isCurrentTrack ? "text-white" : "text-neutral-200"
+            className={`truncate text-sm ${
+              showAsPlaying ? "text-white" : "text-neutral-200"
             }`}
           >
             {song.title}
           </h3>
           <Link
             href={`/artist/${decodeURI(song.artist)}`}
-            className="text-xs text-neutral-500 hover:underline"
+            className="truncate text-xs text-neutral-500 hover:underline"
           >
-            <p className="text-xs text-neutral-500">{song.artist}</p>
+            {song.artist}
           </Link>
         </div>
       </div>
-      <div>
+      <div className="flex flex-shrink-0 items-center gap-2">
         <p className="text-xs text-neutral-500">4:13</p>
       </div>
     </div>

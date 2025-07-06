@@ -10,12 +10,11 @@ import { Track } from "@prisma/client";
 export default function MusicApp() {
   const [tracks, setTracks] = useState<Track[]>([]);
   const [file, setFile] = useState<File | null>(null);
-  const userId = "user-id"; // Здесь указывается ID пользователя
+  const userId = "user-id";
 
-  console.log(tracks)
-  
+  console.log(tracks);
+
   useEffect(() => {
-    // Загружаем все треки при монтировании компонента
     const fetchTracks = async () => {
       const fetchedTracks = await getAllTracks();
       setTracks(fetchedTracks);
@@ -24,33 +23,32 @@ export default function MusicApp() {
   }, []);
 
   const handleUpload = async () => {
-    if (!file) return alert("Выберите файл!");
+    if (!file) return alert("Please select a file!");
 
     try {
       await uploadTrack(file);
-      const updatedTracks = await getAllTracks(); // Загружаем обновленный список треков
+      const updatedTracks = await getAllTracks();
       setTracks(updatedTracks);
     } catch (error) {
-      console.error("Ошибка при загрузке трека:", error);
-      alert("Произошла ошибка при загрузке.");
+      console.error("Error uploading track:", error);
+      alert("An error occurred while uploading.");
     }
   };
 
   const handleAddTrackToUser = async (trackId: string) => {
     try {
       await addTrackToUser(userId, trackId);
-      alert("Трек добавлен в вашу коллекцию!");
+      alert("Track added to your collection!");
     } catch (error) {
-      console.error("Ошибка при добавлении трека:", error);
-      alert("Произошла ошибка при добавлении трека.");
+      console.error("Error adding track:", error);
+      alert("An error occurred while adding track.");
     }
   };
 
   return (
     <div className="p-5">
-      <h1 className="mb-4 text-2xl font-bold">Музыкальное приложение</h1>
+      <h1 className="mb-4 text-2xl font-bold">Music Application</h1>
 
-      {/* Форма для загрузки файла */}
       <input
         type="file"
         onChange={(e) => setFile(e.target.files?.[0] || null)}
@@ -59,10 +57,9 @@ export default function MusicApp() {
         onClick={handleUpload}
         className="mt-2 bg-green-500 px-4 py-2 text-white"
       >
-        Загрузить
+        Upload
       </button>
 
-      {/* Список треков */}
       <ul className="mt-4 grid gap-4">
         {tracks?.map((t) => (
           <li key={t.id} className="rounded-lg border p-4">
@@ -74,7 +71,7 @@ export default function MusicApp() {
               onClick={() => handleAddTrackToUser(t.id)}
               className="mt-2 rounded bg-blue-500 px-3 py-1 text-white"
             >
-              Добавить
+              Add
             </button>
           </li>
         ))}

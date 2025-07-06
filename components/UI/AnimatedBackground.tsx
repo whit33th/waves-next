@@ -1,5 +1,5 @@
 "use client";
-import { PlayerContext } from "@/contexts/PlayerContext";
+import { PlayerContext } from "@/contexts/PlayerContext/PlayerContext";
 import { musicList } from "@/helpers/data/musicData";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
@@ -11,9 +11,9 @@ export default function AnimatedBackground() {
     <AnimatePresence mode="wait">
       <motion.div
         key={track.id}
-        initial={{ opacity: 0 }}
+        initial={{ opacity: 0.1 }}
         animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+        exit={{ opacity: 0.1 }}
         transition={{ duration: 0.5, ease: "easeInOut" }}
         className="absolute inset-0 z-[-1] overflow-hidden"
       >

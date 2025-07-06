@@ -3,7 +3,7 @@ import { SongItemProps } from "../constants/Interfaces/song";
 export const musicList: SongItemProps[] = [
   {
     id: 1,
-    title: "Прощай :(",
+    title: "Goodbye :(",
     artist: "Og Buda",
     album: "SZN",
     genre: "Rap",
@@ -12,9 +12,9 @@ export const musicList: SongItemProps[] = [
   },
   {
     id: 2,
-    title: "Сердце ᐸ/3 Время",
+    title: "Heart </3 Time",
     artist: "Og Buda",
-    album: "Скучаю, Но работаю",
+    album: "Missing, But Working",
     genre: "Rap",
     filePath: "/music/сердце.mp3",
     image: "/img/albums/скучаю.webp",
