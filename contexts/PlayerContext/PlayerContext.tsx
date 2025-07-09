@@ -1,37 +1,8 @@
 "use client";
+import { IPlayerContextType } from "@/helpers/constants/Interfaces/playerContext";
 import { musicList } from "@/helpers/data/musicData";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { createContext, useEffect, useRef, useState } from "react";
-
-interface IPlayerContextType {
-  audioRef: React.RefObject<HTMLAudioElement | null>;
-  durationRef: React.RefObject<HTMLDivElement | null>;
-  durationBodyRef: React.RefObject<HTMLInputElement | null>;
-  isPlaying: boolean;
-  setIsPlaying: (value: boolean) => void;
-  track: (typeof musicList)[0];
-  setTrack: (value: (typeof musicList)[0]) => void;
-  time: {
-    current: { second: number; minute: number };
-    duration: { second: number; minute: number };
-  };
-  setTime: (value: {
-    current: { second: number; minute: number };
-    duration: { second: number; minute: number };
-  }) => void;
-  play: () => void;
-  pause: () => void;
-  nextTrack: () => void;
-  previousTrack: () => void;
-  handleSeek: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleVolumeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  progress?: number;
-  volumeRef: React.RefObject<HTMLInputElement | null>;
-  volume: number;
-  handlePlayChosen: (track: (typeof musicList)[0]) => void;
-  setIsMaximized: (value: boolean) => void;
-  isMaximized: boolean;
-}
 
 export const PlayerContext = createContext<IPlayerContextType>(
   {} as IPlayerContextType,
@@ -113,6 +84,12 @@ function PlayerContextProvider(props: { children: React.ReactNode }) {
       }
     }
   }
+  function handleBufferProgress() {
+    if (audioRef.current) {
+      const audio = audioRef.current;
+      console.log("Buffered progress:", audio.buffered);
+    }
+  }
 
   useEffect(() => {
     if (audioRef.current) {
@@ -155,6 +132,7 @@ function PlayerContextProvider(props: { children: React.ReactNode }) {
       audio.addEventListener("loadeddata", handleLoadedData);
       audio.addEventListener("ended", handleEnded);
       audio.addEventListener("canplay", handleCanPlay);
+      audio.addEventListener("progress", handleBufferProgress);
 
       return () => {
         audio.removeEventListener("timeupdate", handleTimeUpdate);
@@ -164,7 +142,9 @@ function PlayerContextProvider(props: { children: React.ReactNode }) {
       };
     }
   }, [track]);
+
   const pathname = usePathname();
+
   useEffect(() => {
     setIsMaximized(false);
   }, [pathname]);

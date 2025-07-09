@@ -50,7 +50,7 @@ export default function UniversalSidebar() {
   // Desktop version - collapsed state
   if (isCollapsed) {
     return (
-      <div className="hidden h-full w-12 flex-col items-center border-r py-4 md:flex">
+      <div className="border-border hidden h-full w-12 flex-col items-center border-r py-4 md:flex">
         <button
           onClick={() => setIsCollapsed(false)}
           className="rounded-lg p-2 transition-colors hover:bg-neutral-800"

@@ -85,25 +85,27 @@ export function FullScreenPlayer({
             </button>
           </div>
 
-          <div className="mb-8 flex flex-1 items-center justify-center">
-            <div className="aspect-square w-full max-w-80 overflow-hidden rounded-2xl">
-              <Image
-                src={track?.image ?? "/placeholder-image.jpg"}
-                width={320}
-                height={320}
-                alt={track?.title || "Track cover"}
-                className="h-full w-full object-cover"
-              />
+          <div className="flex flex-1 flex-col gap-2">
+            <div className="flex flex-1 items-center justify-center">
+              <div className="aspect-square w-full max-w-80 overflow-hidden rounded-2xl">
+                <Image
+                  src={track?.image ?? "/placeholder-image.jpg"}
+                  width={320}
+                  height={320}
+                  alt={track?.title || "Track cover"}
+                  className="h-full w-full object-cover"
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="mb-4 text-center">
-            <h1 className="text-2xl font-bold text-white">
-              {track?.title || "Track Title"}
-            </h1>
-            <p className="text-lg text-neutral-400">
-              {track?.artist || "Unknown Artist"}
-            </p>
+            <div className="mb-4 text-center">
+              <h1 className="text-xl font-bold text-white md:text-2xl">
+                {track?.title || "Track Title"}
+              </h1>
+              <p className="text-base text-neutral-400 md:text-lg">
+                {track?.artist || "Unknown Artist"}
+              </p>
+            </div>
           </div>
 
           <div className="mb-8">

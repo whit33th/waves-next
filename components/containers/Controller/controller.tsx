@@ -35,7 +35,7 @@ export default function Controller() {
         handleMute={handleMute}
       />
 
-      <div className="fixed right-0 bottom-15 left-0 z-30 flex gap-5 bg-neutral-950/95 p-3 backdrop-blur-md md:relative md:bottom-auto md:bg-neutral-950/10 md:backdrop-blur-none">
+      <div className="flex gap-5 bg-neutral-950/95 p-3 backdrop-blur-md md:relative md:bottom-auto md:bg-neutral-950/10 md:backdrop-blur-none">
         <MobilePlayer onFullScreenOpen={() => setIsFullPlayerOpen(true)} />
         <DesktopPlayer
           isShuffle={isShuffle}

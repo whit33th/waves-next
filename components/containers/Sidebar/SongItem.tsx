@@ -64,7 +64,7 @@ export default function SongItem({
           </h3>
           <Link
             href={`/artist/${decodeURI(song.artist)}`}
-            className="truncate text-xs text-neutral-500 hover:underline"
+            className="w-fit truncate text-xs text-neutral-500 hover:underline"
           >
             {song.artist}
           </Link>
