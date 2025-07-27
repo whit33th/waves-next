@@ -1,22 +1,22 @@
 "use client";
-import { PlayerContext } from "@/contexts/PlayerContext/PlayerContext";
-import { useContext } from "react";
+import { usePlayer } from "@/components/context/PlayerContext/PlayerContext";
 
 export default function DurationRange() {
-  const { durationBodyRef, durationRef, time, audioRef, handleSeek } =
-    useContext(PlayerContext);
+  const { time, handleSeek, durationRef, durationBodyRef } = usePlayer();
 
   return (
     <div className="w-full">
       <div className="flex items-center gap-2">
         <span className="min-w-[4ch] text-center text-xs text-neutral-400 tabular-nums">
-          {time.current.minute}:
-          {time.current.second.toString().padStart(2, "0")}
+          {!isNaN(time.current.minute) ? time.current.minute : "00"}:
+          {!isNaN(time.current.second)
+            ? time.current.second.toString().padStart(2, "0")
+            : "00"}
         </span>
         <div className="relative h-1 flex-1 rounded-full bg-neutral-100/20">
           <div
             ref={durationRef}
-            className={`bg-primary absolute h-full rounded-full transition-all duration-75 ease-out`}
+            className="bg-primary pointer-events-none absolute z-10 h-full rounded-full"
           />
 
           <input
@@ -30,8 +30,10 @@ export default function DurationRange() {
           />
         </div>
         <span className="min-w-[4ch] text-center text-xs text-neutral-400 tabular-nums">
-          {time.duration.minute}:
-          {time.duration.second.toString().padStart(2, "0")}
+          {!isNaN(time.duration.minute) ? time.duration.minute : "00"}:
+          {!isNaN(time.duration.second)
+            ? time.duration.second.toString().padStart(2, "0")
+            : "00"}
         </span>
       </div>
     </div>

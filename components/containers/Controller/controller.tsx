@@ -1,52 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { usePlayer } from "@/components/context/PlayerContext/PlayerContext";
+import { AnimatePresence, motion } from "framer-motion";
 import { DesktopPlayer } from "./DesktopPlayer";
 import { FullScreenPlayer } from "./FullScreenPlayer";
 import { MobilePlayer } from "./MobilePlayer";
 
 export default function Controller() {
-  const [isShuffle, setShuffle] = useState(false);
-  const [repeatMode, setRepeatMode] = useState(0);
-  const [volume, setVolume] = useState(50);
-  const [isLyricsOpen, setLyricsOpen] = useState(false);
-  const [isFullPlayerOpen, setIsFullPlayerOpen] = useState(false);
-
-  function handleRepeat() {
-    if (repeatMode < 2) setRepeatMode(repeatMode + 1);
-    else setRepeatMode(0);
-  }
-
-  function handleMute() {
-    if (volume > 0) setVolume(0);
-  }
-
+  const { trackList } = usePlayer();
   return (
     <>
-      <FullScreenPlayer
-        isOpen={isFullPlayerOpen}
-        onClose={() => setIsFullPlayerOpen(false)}
-        isShuffle={isShuffle}
-        setShuffle={setShuffle}
-        repeatMode={repeatMode}
-        handleRepeat={handleRepeat}
-        volume={volume}
-        setVolume={setVolume}
-        handleMute={handleMute}
-      />
+      <FullScreenPlayer />
 
-      <div className="flex gap-5 bg-neutral-950/95 p-3 backdrop-blur-md md:relative md:bottom-auto md:bg-neutral-950/10 md:backdrop-blur-none">
-        <MobilePlayer onFullScreenOpen={() => setIsFullPlayerOpen(true)} />
-        <DesktopPlayer
-          isShuffle={isShuffle}
-          setShuffle={setShuffle}
-          repeatMode={repeatMode}
-          handleRepeat={handleRepeat}
-          handleMute={handleMute}
-          isLyricsOpen={isLyricsOpen}
-          setLyricsOpen={setLyricsOpen}
-        />
-      </div>
+      <AnimatePresence mode="wait">
+        {trackList.length > 0 && (
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            transition={{
+              duration: 0.5,
+              ease: "easeInOut",
+            }}
+            className="flex gap-5 bg-neutral-950/95 p-3 md:relative md:bottom-auto md:bg-neutral-950/70 md:backdrop-blur-none"
+          >
+            <MobilePlayer />
+            <DesktopPlayer />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

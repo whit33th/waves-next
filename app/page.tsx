@@ -1,41 +1,26 @@
-import { MusicGrid } from "@/components/UI/MusicGrid";
+"use client";
 
-const featuredContent = [
-  {
-    title: "New Releases",
-    subtitle: "Fresh tracks",
-    imageUrl: "/img/albums/arcane.png",
-    type: "playlist" as const,
-  },
-  {
-    title: "Top Tracks",
-    subtitle: "Most popular",
-    imageUrl: "/img/albums/ogbuda.png",
-    type: "playlist" as const,
-  },
-  {
-    title: "Recommendations",
-    subtitle: "Picked for you",
-    imageUrl: "/img/albums/szn.png",
-    type: "playlist" as const,
-  },
-  {
-    title: "Favorites",
-    subtitle: "Your loved ones",
-    imageUrl: "/img/albums/image.png",
-    type: "playlist" as const,
-  },
-];
+import WidgetBoard from "@/components/containers/Controller/WidgetBoard";
+import { AlbumSection } from "@/components/UI/MusicGrid";
+import { api } from "@/convex/_generated/api";
+import { useQuery } from "convex-helpers/react/cache";
+import Image from "next/image";
 
 export default function HomePage() {
-  return (
-    <div className="relative z-10 min-h-screen backdrop-blur-sm">
-      <div className="space-y-8 p-6">
-        <header className="text-center"></header>
+  const albums = useQuery(api.albums.getAllAlbums);
+  console.log(albums);
 
-        <section>
-          <h2 className="mb-4 text-2xl font-semibold text-white">Featured</h2>
-          <MusicGrid items={featuredContent} />
+  return (
+    <div className="relative backdrop-blur-sm">
+      <div className="space-y-8 p-6">
+        {/* <header className="text-center"></header> */}
+        {/* <WidgetBoard /> */}
+
+        <section className="space-y-12">
+          <AlbumSection items={albums ?? []} label="New releases" />
+          <AlbumSection items={albums ?? []} label="Top charts" />
+          <AlbumSection items={albums ?? []} label="Recommended for you" />
+          <AlbumSection items={albums ?? []} label="More like this" />
         </section>
       </div>
     </div>

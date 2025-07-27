@@ -1,49 +1,36 @@
 "use client";
 
+import { usePlayer } from "@/components/context/PlayerContext/PlayerContext";
 import { ControlButton } from "@/components/UI/buttons/ControlButton";
 import { LyricsButton } from "@/components/UI/buttons/LyricsButton";
-import { PlayButton } from "@/components/UI/buttons/PlayButton";
-import ActionBtn from "@/components/UI/buttons/actionBtn";
+import PlayButton from "@/components/UI/buttons/PlayButton";
 import DurationRange from "@/components/UI/durationRange/durationRange";
-import { VolumeControl } from "@/components/UI/volume/VolumeControl";
-import { PlayerContext } from "@/contexts/PlayerContext/PlayerContext";
+import VolumeControl from "@/components/UI/volume/VolumeControl";
 import {
   Ellipsis,
   FastForward,
   Maximize,
-  Maximize2,
   Minimize,
   Plus,
   Repeat,
   Repeat1,
   Rewind,
   Shuffle,
-  Sparkles,
 } from "lucide-react";
-import { useContext } from "react";
 
-interface DesktopPlayerProps {
-  isShuffle: boolean;
-  setShuffle: (value: boolean) => void;
-  repeatMode: number;
-  handleRepeat: () => void;
-  handleMute: () => void;
-  isLyricsOpen: boolean;
-  setLyricsOpen: (value: boolean) => void;
-}
-
-export function DesktopPlayer({
-  isShuffle,
-  setShuffle,
-  repeatMode,
-  handleRepeat,
-  handleMute,
-  isLyricsOpen,
-  setLyricsOpen,
-}: DesktopPlayerProps) {
-  const { nextTrack, previousTrack, setIsMaximized, isMaximized } =
-    useContext(PlayerContext);
-
+export function DesktopPlayer() {
+  const {
+    isMaximized,
+    setIsMaximized,
+    previousTrack,
+    nextTrack,
+    isShuffle,
+    setIsShuffle,
+    setIsLyricsOpen,
+    isLyricsOpen,
+    handleRepeat,
+    repeatMode,
+  } = usePlayer();
   return (
     <div className="hidden w-full gap-5 lg:flex">
       <div className="relative z-50 flex w-full flex-col gap-2">
@@ -59,7 +46,7 @@ export function DesktopPlayer({
               <ControlButton Icon={Plus} size={22} />
             </div>
             <ControlButton
-              Icon={isMaximized ? Maximize : Minimize}
+              Icon={isMaximized ? Minimize : Maximize}
               onClick={() => setIsMaximized(!isMaximized)}
               size={22}
             />
@@ -70,7 +57,7 @@ export function DesktopPlayer({
               <ControlButton
                 Icon={Shuffle}
                 size={22}
-                onClick={() => setShuffle(!isShuffle)}
+                onClick={() => setIsShuffle(!isShuffle)}
                 isActive={isShuffle}
               />
               <ControlButton
@@ -98,10 +85,10 @@ export function DesktopPlayer({
           <div className="flex items-center justify-end gap-2 sm:gap-3">
             <LyricsButton
               isOpen={isLyricsOpen}
-              onClick={() => setLyricsOpen(!isLyricsOpen)}
+              onClick={() => setIsLyricsOpen(!isLyricsOpen)}
             />
             <div className="hidden sm:block">
-              <VolumeControl onMute={handleMute} />
+              <VolumeControl />
             </div>
           </div>
         </div>

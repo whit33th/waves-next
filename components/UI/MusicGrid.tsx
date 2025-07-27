@@ -1,48 +1,71 @@
+"use client";
+import { api } from "@/convex/_generated/api";
+import { FunctionReturnType } from "convex/server";
 import { Heart, Play } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { usePlayer } from "../context/PlayerContext/PlayerContext";
+import { useQuery } from "convex-helpers/react/cache";
 
-interface MusicItemProps {
-  title: string;
-  subtitle: string;
-  imageUrl: string;
-  type?: "album" | "playlist" | "podcast";
-}
+type Album = FunctionReturnType<typeof api.albums.getAllAlbums>[number];
 
-const MusicItem = ({
-  title,
-  subtitle,
-  imageUrl,
-  type = "album",
-}: MusicItemProps) => (
-  <div className="bg-card/40 hover:bg-card/60 group relative rounded-xl p-4 transition-all hover:scale-105">
-    <div className="relative aspect-square rounded-lg">
-      <Image
-        src={imageUrl}
-        alt={title}
-        fill
-        className="object-cover transition-all"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-      <div className="absolute right-2 bottom-2 flex gap-2">
-        <button className="rounded-full bg-white/10 p-2 backdrop-blur-md transition-transform hover:scale-105">
-          <Heart className="h-5 w-5" />
-        </button>
-        <button className="bg-primary text-primary-foreground rounded-full p-2 shadow-lg transition-transform hover:scale-105">
+const Album = (props: Album) => {
+  const { handleSetTrackList } = usePlayer();
+  const albumTrackList = useQuery(api.tracks.getTracks, {
+    albumId: props._id,
+  });
+  const handlePlay = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    handleSetTrackList(albumTrackList ?? []);
+  };
+
+  return (
+    <Link
+      href={`/album/${props._id}`}
+      className="group rounded-lg p-2.5 drop-shadow-2xl transition-colors hover:bg-white/5"
+    >
+      <div className="relative aspect-square">
+        <Image
+          src={props.coverUrl ?? ""}
+          alt={props.title || "No title"}
+          fill
+          className="rounded-lg object-cover transition-all duration-1000 ease-in-out group-hover:hue-rotate-0 group-hover:duration-0 group-[&:not(:hover)]:hue-rotate-360"
+        />
+        <div className="absolute inset-0 rounded-lg bg-gradient-to-t from-black/30 to-transparent to-20% opacity-0 transition-opacity group-hover:opacity-100" />
+        <button
+          onClick={handlePlay}
+          className="absolute right-2 bottom-2 rounded-full bg-white/30 p-2 opacity-0 mix-blend-difference shadow-2xl backdrop-blur-xl backdrop-invert-100 transition-opacity duration-300 group-hover:opacity-100 hover:scale-107"
+        >
           <Play fill="currentColor" className="h-5 w-5" />
         </button>
       </div>
-    </div>
-    <div className="mt-4 space-y-1">
-      <h3 className="line-clamp-1 font-medium">{title}</h3>
-      <p className="text-muted-foreground line-clamp-2 text-sm">{subtitle}</p>
-    </div>
-  </div>
-);
+      <div className="mt-2">
+        <h3 className="line-clamp-1">{props.title || "No title"}</h3>
+        <p className="line-clamp-2 text-xs text-gray-400">
+          {props.artist?.name || "Unknown Artist"}
+        </p>
+      </div>
+    </Link>
+  );
+};
 
-export const MusicGrid = ({ items }: { items: MusicItemProps[] }) => (
-  <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-    {items.map((item, i) => (
-      <MusicItem key={i} {...item} />
-    ))}
-  </div>
-);
+export const AlbumSection = ({
+  items,
+  label,
+}: {
+  items: Album[];
+  label: string;
+}) => {
+  return (
+    <div className="space-y-2">
+      <h3 className="pl-2.5 text-2xl font-semibold">{label}</h3>
+
+      <section className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))]">
+        {items?.map((item) => (
+          <Album key={item._id} {...item} />
+        ))}
+      </section>
+    </div>
+  );
+};

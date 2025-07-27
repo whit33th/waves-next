@@ -1,0 +1,543 @@
+openapi: 3.0.3
+info:
+  title: Convex App - OpenAPI 3.0
+  version: 0.0.0
+servers:
+  - url: https://nautical-gerbil-702.convex.cloud
+security:
+  - bearerAuth: []
+tags:
+  - name: query
+    description: Functions that read data
+  - name: mutation
+    description: Functions that write/update/delete data
+  - name: action
+    description: Functions that can make calls to external APIs
+paths:
+  /api/run/files/generateUploadUrl:
+    post:
+      summary: Calls a mutation at the path files.js:generateUploadUrl
+      tags:
+        - mutation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Request_files.generateUploadUrl"
+        required: true
+      responses:
+        "200":
+          description: Convex executed your request and returned a result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response_files.generateUploadUrl"
+        "400":
+          description: Failed operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FailedResponse"
+        "500":
+          description: Convex Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FailedResponse"
+
+  /api/run/albums/createAlbum:
+    post:
+      summary: Calls a mutation at the path albums.js:createAlbum
+      tags:
+        - mutation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Request_albums.createAlbum"
+        required: true
+      responses:
+        "200":
+          description: Convex executed your request and returned a result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response_albums.createAlbum"
+        "400":
+          description: Failed operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FailedResponse"
+        "500":
+          description: Convex Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FailedResponse"
+
+  /api/run/albums/getAllAlbums:
+    post:
+      summary: Calls a query at the path albums.js:getAllAlbums
+      tags:
+        - query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Request_albums.getAllAlbums"
+        required: true
+      responses:
+        "200":
+          description: Convex executed your request and returned a result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response_albums.getAllAlbums"
+        "400":
+          description: Failed operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FailedResponse"
+        "500":
+          description: Convex Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FailedResponse"
+
+  /api/run/tracks/createTrack:
+    post:
+      summary: Calls a mutation at the path tracks.js:createTrack
+      tags:
+        - mutation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Request_tracks.createTrack"
+        required: true
+      responses:
+        "200":
+          description: Convex executed your request and returned a result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response_tracks.createTrack"
+        "400":
+          description: Failed operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FailedResponse"
+        "500":
+          description: Convex Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FailedResponse"
+
+  /api/run/tracks/getTracks:
+    post:
+      summary: Calls a query at the path tracks.js:getTracks
+      tags:
+        - query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Request_tracks.getTracks"
+        required: true
+      responses:
+        "200":
+          description: Convex executed your request and returned a result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response_tracks.getTracks"
+        "400":
+          description: Failed operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FailedResponse"
+        "500":
+          description: Convex Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FailedResponse"
+
+  /api/run/tracks/getSingleTrack:
+    post:
+      summary: Calls a query at the path tracks.js:getSingleTrack
+      tags:
+        - query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Request_tracks.getSingleTrack"
+        required: true
+      responses:
+        "200":
+          description: Convex executed your request and returned a result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response_tracks.getSingleTrack"
+        "400":
+          description: Failed operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FailedResponse"
+        "500":
+          description: Convex Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FailedResponse"
+
+  /api/run/tracks/getTrackUrl:
+    post:
+      summary: Calls a query at the path tracks.js:getTrackUrl
+      tags:
+        - query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Request_tracks.getTrackUrl"
+        required: true
+      responses:
+        "200":
+          description: Convex executed your request and returned a result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response_tracks.getTrackUrl"
+        "400":
+          description: Failed operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FailedResponse"
+        "500":
+          description: Convex Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FailedResponse"
+
+  /api/run/users/user/createUser:
+    post:
+      summary: Calls a mutation at the path users/user.js:createUser
+      tags:
+        - mutation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Request_users.user.createUser"
+        required: true
+      responses:
+        "200":
+          description: Convex executed your request and returned a result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response_users.user.createUser"
+        "400":
+          description: Failed operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FailedResponse"
+        "500":
+          description: Convex Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FailedResponse"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Token of the format "Bearer {token}" for normal authentication and "Convex {token}" for admin tokens.
+  schemas:
+    Request_files.generateUploadUrl:
+      type: object
+      required:
+        - args
+      properties:
+        args: {}
+
+    Response_files.generateUploadUrl:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          enum:
+            - "success"
+            - "error"
+        errorMessage:
+          type: string
+        errorData:
+          type: object
+        value: {}
+
+    Request_albums.createAlbum:
+      type: object
+      required:
+        - args
+      properties:
+        args:
+          type: object
+          required:
+            - artistId
+            - cover
+            - title
+          properties:
+            artistId:
+              type: string
+              description: ID from table "users"
+            cover:
+              type: string
+              description: ID from table "_storage"
+            description:
+              type: string
+            title:
+              type: string
+
+    Response_albums.createAlbum:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          enum:
+            - "success"
+            - "error"
+        errorMessage:
+          type: string
+        errorData:
+          type: object
+        value: {}
+
+    Request_albums.getAllAlbums:
+      type: object
+      required:
+        - args
+      properties:
+        args:
+          type: object
+
+    Response_albums.getAllAlbums:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          enum:
+            - "success"
+            - "error"
+        errorMessage:
+          type: string
+        errorData:
+          type: object
+        value: {}
+
+    Request_tracks.createTrack:
+      type: object
+      required:
+        - args
+      properties:
+        args:
+          type: object
+          required:
+            - albumId
+            - artistId
+            - duration
+            - order
+            - title
+            - trackUrl
+          properties:
+            albumId:
+              type: string
+              description: ID from table "albums"
+            artistId:
+              type: string
+              description: ID from table "users"
+            duration:
+              type: number
+            featuredArtists:
+              type: array
+              items:
+                type: string
+                description: ID from table "users"
+            order:
+              type: number
+            title:
+              type: string
+            trackUrl:
+              type: string
+              description: ID from table "_storage"
+            videoUrl:
+              type: string
+              description: ID from table "_storage"
+
+    Response_tracks.createTrack:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          enum:
+            - "success"
+            - "error"
+        errorMessage:
+          type: string
+        errorData:
+          type: object
+        value: {}
+
+    Request_tracks.getTracks:
+      type: object
+      required:
+        - args
+      properties:
+        args:
+          type: object
+          properties:
+            albumId:
+              type: string
+              description: ID from table "albums"
+            artistId:
+              type: string
+              description: ID from table "users"
+
+    Response_tracks.getTracks:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          enum:
+            - "success"
+            - "error"
+        errorMessage:
+          type: string
+        errorData:
+          type: object
+        value: {}
+
+    Request_tracks.getSingleTrack:
+      type: object
+      required:
+        - args
+      properties:
+        args:
+          type: object
+          required:
+            - trackId
+          properties:
+            trackId:
+              type: string
+              description: ID from table "tracks"
+
+    Response_tracks.getSingleTrack:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          enum:
+            - "success"
+            - "error"
+        errorMessage:
+          type: string
+        errorData:
+          type: object
+        value: {}
+
+    Request_tracks.getTrackUrl:
+      type: object
+      required:
+        - args
+      properties:
+        args:
+          type: object
+          required:
+            - trackId
+          properties:
+            trackId:
+              type: string
+              description: ID from table "_storage"
+
+    Response_tracks.getTrackUrl:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          enum:
+            - "success"
+            - "error"
+        errorMessage:
+          type: string
+        errorData:
+          type: object
+        value: {}
+
+    Request_users.user.createUser:
+      type: object
+      required:
+        - args
+      properties:
+        args:
+          type: object
+          required:
+            - email
+            - name
+          properties:
+            avatar:
+              type: string
+              description: ID from table "_storage"
+            bio:
+              type: string
+            email:
+              type: string
+            name:
+              type: string
+
+    Response_users.user.createUser:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          enum:
+            - "success"
+            - "error"
+        errorMessage:
+          type: string
+        errorData:
+          type: object
+        value: {}
+
+    FailedResponse:
+      type: object
+      properties: {}

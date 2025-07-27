@@ -1,19 +1,14 @@
 "use client";
 
-import { useSidebar } from "@/contexts/SidebarContext";
 import { ChevronLeft, ListMusic, X } from "lucide-react";
-import { musicList } from "@/helpers/data/musicData";
+import { useState } from "react";
 import SongList from "./SongList";
 
 export default function UniversalSidebar() {
-  const {
-    isCollapsed,
-    setIsCollapsed,
-    isMobileSidebarOpen,
-    setIsMobileSidebarOpen,
-  } = useSidebar();
+  const [currentView, setCurrentView] = useState("queue");
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
-  // Mobile version - full screen overlay
   if (isMobileSidebarOpen) {
     return (
       <div className="*:border-border fixed inset-0 z-50 flex transform flex-col bg-neutral-950 transition-transform duration-300 md:hidden">
@@ -30,24 +25,13 @@ export default function UniversalSidebar() {
           </button>
         </div>
 
-        <div className="space-y-2 border-b p-4">
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-neutral-400">
-              {musicList.length} tracks
-            </span>
-          </div>
-        </div>
-
         <div className="flex-1 overflow-x-hidden overflow-y-auto">
-          <div className="space-y-1 p-4">
-            <SongList />
-          </div>
+          <SongList />
         </div>
       </div>
     );
   }
 
-  // Desktop version - collapsed state
   if (isCollapsed) {
     return (
       <div className="border-border hidden h-full w-12 flex-col items-center border-r py-4 md:flex">
@@ -61,7 +45,6 @@ export default function UniversalSidebar() {
     );
   }
 
-  // Desktop version - expanded state
   return (
     <div className="*:border-border border-border hidden h-full w-80 flex-col border-r bg-neutral-950 md:flex">
       <div className="flex flex-shrink-0 items-center justify-between border-b p-4">
@@ -79,18 +62,8 @@ export default function UniversalSidebar() {
         </button>
       </div>
 
-      <div className="space-y-2 border-b p-4">
-        <div className="flex items-center justify-between">
-          <span className="text-sm text-neutral-400">
-            {musicList.length} tracks
-          </span>
-        </div>
-      </div>
-
       <div className="sidebar-scroll flex-1 overflow-x-hidden overflow-y-auto">
-        <div className="space-y-1 p-4">
-          <SongList />
-        </div>
+        <SongList />
       </div>
     </div>
   );

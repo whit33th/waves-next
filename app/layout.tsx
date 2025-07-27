@@ -1,9 +1,10 @@
-import Audio from "@/components/containers/audio";
+import { PlayerProvider } from "@/components/context/PlayerContext/PlayerContext";
 import Sidebar from "@/components/containers/Sidebar/sidebar";
-import PlayerContextProvider from "@/contexts/PlayerContext/PlayerContext";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
+import { ConvexClientProvider } from "@/components/layouts/ConvexClientProvider";
+import { ConvexQueryCacheProvider } from "convex-helpers/react/cache/provider";
 
 const robotoSans = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -23,10 +24,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${robotoSans.className} antialiased`}>
-        <PlayerContextProvider>
-          <Sidebar>{children}</Sidebar>
-          <Audio />
-        </PlayerContextProvider>
+        <ConvexClientProvider>
+          <ConvexQueryCacheProvider>
+            <PlayerProvider>
+              <Sidebar>{children}</Sidebar>
+            </PlayerProvider>
+          </ConvexQueryCacheProvider>
+        </ConvexClientProvider>
       </body>
     </html>
   );

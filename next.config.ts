@@ -2,15 +2,20 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   experimental: {
-    ppr: "incremental",
+    viewTransition: true,
   },
+
   images: {
     remotePatterns: [
       {
         hostname: "i.scdn.co",
       },
+      {
+        hostname: "nautical-gerbil-702.convex.cloud",
+      },
     ],
   },
+  reactStrictMode: false,
   eslint: {
     ignoreDuringBuilds: true,
   },

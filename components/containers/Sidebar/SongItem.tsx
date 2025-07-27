@@ -1,34 +1,37 @@
 "use client";
-import { PlayerContext } from "@/contexts/PlayerContext/PlayerContext";
-import { SongItemProps } from "@/helpers/constants/Interfaces/song";
+import { usePlayer } from "@/components/context/PlayerContext/PlayerContext";
+import { api } from "@/convex/_generated/api";
+import { FunctionReturnType } from "convex/server";
 import { Pause, Play } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useContext } from "react";
+import { motion } from "framer-motion";
 
-interface SongItemPropsWithIndex {
-  song: SongItemProps;
-  index?: number;
-  isCurrentlyPlaying?: boolean;
-}
+type GetTracksResult = FunctionReturnType<typeof api.tracks.getTracks>;
+type Track = GetTracksResult extends Array<infer T> ? T : never;
 
 export default function SongItem({
-  song,
+  track: song,
   index,
-  isCurrentlyPlaying,
-}: SongItemPropsWithIndex) {
-  const { setTrack, track, handlePlayChosen, isPlaying } =
-    useContext(PlayerContext);
+}: {
+  track: Track;
+  index: number;
+}) {
+  const { isPlaying, handlePlayTrack, trackList, currentTrackIndex } =
+    usePlayer();
 
-  const isCurrentTrack = track?.id === song.id;
-  const showAsPlaying = isCurrentlyPlaying || isCurrentTrack;
+  const isCurrentTrack = currentTrackIndex === index;
+  const showAsPlaying = isCurrentTrack;
 
   const handlePlay = () => {
-    handlePlayChosen(song);
+    handlePlayTrack(song);
   };
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.1, delay: index * 0.1, ease: "easeInOut" }}
       onDoubleClick={handlePlay}
       className={`group flex cursor-pointer items-center justify-between rounded-lg p-2 transition select-none hover:bg-neutral-900 ${
         showAsPlaying ? "bg-neutral-800" : ""
@@ -41,8 +44,8 @@ export default function SongItem({
         >
           <Image
             className="aspect-square rounded object-cover"
-            src={song.image}
-            alt={song.title}
+            src={song.coverUrl ?? ""}
+            alt={song.album?.title || "No title"}
             width={40}
             height={40}
           />
@@ -63,16 +66,17 @@ export default function SongItem({
             {song.title}
           </h3>
           <Link
-            href={`/artist/${decodeURI(song.artist)}`}
+            href={`/artist/${encodeURIComponent(song.artist?.name ?? "unknown")}`}
             className="w-fit truncate text-xs text-neutral-500 hover:underline"
           >
-            {song.artist}
+            {song.artist?.name ?? "Unknown Artist"}
           </Link>
         </div>
       </div>
       <div className="flex flex-shrink-0 items-center gap-2">
+        {/* Моковое время */}
         <p className="text-xs text-neutral-500">4:13</p>
       </div>
-    </div>
+    </motion.div>
   );
 }

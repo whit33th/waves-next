@@ -15,6 +15,7 @@
   --color-light-hover: #2a2a2a;
   --color-button: #ffcf01;
   --color-button-text: #000000;
+  --color-input-bg: #030303;
 }
 
 @layer base {

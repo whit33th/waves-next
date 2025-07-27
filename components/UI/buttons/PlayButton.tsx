@@ -1,13 +1,22 @@
 "use client";
-import { PlayerContext } from "@/contexts/PlayerContext/PlayerContext";
+import { usePlayer } from "@/components/context/PlayerContext/PlayerContext";
 import { Pause, Play } from "lucide-react";
-import { useContext } from "react";
 
-export function PlayButton() {
-  const { isPlaying, play, pause } = useContext(PlayerContext);
+export default function PlayButton() {
+  const { isPlaying, play, pause } = usePlayer();
+
+  function handlePlay(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isPlaying) {
+      pause();
+    } else play();
+  }
+
   return (
     <button
-      onClick={isPlaying ? pause : play}
+      type="button"
+      onClick={handlePlay}
       className="rounded-full bg-neutral-100 p-3 hover:opacity-90"
     >
       {isPlaying ? (

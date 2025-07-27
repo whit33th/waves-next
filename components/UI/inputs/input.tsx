@@ -16,7 +16,7 @@ export default function Input({
 }: IInput) {
   return (
     <div
-      className={`group flex items-center gap-2 rounded-full px-6 text-sm ${className}`}
+      className={`group flex items-center gap-2 rounded-full text-sm ${className}`}
     >
       <Search className="text-neutral-500" width={18} />
       <input

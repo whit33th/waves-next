@@ -1,14 +1,20 @@
 "use client";
-import { PlayerContext } from "@/contexts/PlayerContext/PlayerContext";
+
+import { usePlayer } from "@/components/context/PlayerContext/PlayerContext";
 import { Volume, Volume1, Volume2, VolumeOff } from "lucide-react";
-import { useContext } from "react";
+import { useCallback } from "react";
 
-interface VolumeControlProps {
-  onMute: () => void;
-}
+export default function VolumeControl() {
+  const { volume, handleVolumeChange, handleMute, volumeRef } = usePlayer();
 
-export function VolumeControl({ onMute }: VolumeControlProps) {
-  const { handleVolumeChange, volumeRef, volume } = useContext(PlayerContext);
+  const volumeRefCallback = useCallback(
+    (node: HTMLInputElement | null) => {
+      if (volumeRef.current) {
+        volumeRef.current = node;
+      }
+    },
+    [volumeRef],
+  );
 
   const volumeValue = volume;
   const VolumeIcon =
@@ -20,13 +26,11 @@ export function VolumeControl({ onMute }: VolumeControlProps) {
           ? Volume1
           : Volume2;
 
-  console.log("VolumeControl rendered with volume:", volume);
-
   return (
     <div className="flex items-center justify-center gap-2">
       <button
         className="text-neutral-300/60 transition hover:opacity-80"
-        onClick={onMute}
+        onClick={handleMute}
       >
         <VolumeIcon />
       </button>
@@ -37,7 +41,7 @@ export function VolumeControl({ onMute }: VolumeControlProps) {
         />
 
         <input
-          ref={volumeRef}
+          ref={volumeRefCallback}
           type="range"
           min="0"
           defaultValue={volumeValue}
