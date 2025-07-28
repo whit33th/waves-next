@@ -7,7 +7,8 @@ export default function AnimatedBackground() {
   const { currentTrackIndex, isMaximized, trackList, setCurrentTrackIndex } =
     usePlayer();
   return (
-    trackList.length > 0 && (
+    trackList.length > 0 &&
+    trackList[currentTrackIndex]?.coverUrl && (
       <AnimatePresence mode="wait">
         <motion.div
           key={trackList[currentTrackIndex].albumId}

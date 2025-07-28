@@ -1,12 +1,23 @@
 import React from "react";
 import Image from "next/image";
-import { Track } from "@/components/containers/Track";
 import Link from "next/link";
+
+interface SearchItem {
+  id?: string;
+  name?: string;
+  title?: string;
+  image: string;
+  description?: string;
+  artist?: string;
+  duration?: string;
+  year?: string;
+  followers?: string;
+}
 
 interface SearchResultSectionProps {
   title: string;
   layout: "featured" | "grid";
-  items: any[];
+  items: SearchItem[];
 }
 
 export default function SearchResultSection({
@@ -14,7 +25,7 @@ export default function SearchResultSection({
   layout,
   items,
 }: SearchResultSectionProps) {
-  const renderItem = (item: any, index: number) => {
+  const renderItem = (item: SearchItem, index: number) => {
     if (title === "Top Result") {
       return (
         <Link
@@ -23,7 +34,7 @@ export default function SearchResultSection({
         >
           <Image
             src={item.image}
-            alt={item.name}
+            alt={item.name || "Artist image"}
             width={180}
             height={180}
             className="rounded-full"
@@ -38,14 +49,25 @@ export default function SearchResultSection({
 
     if (title === "Songs") {
       return (
-        <Track
-          position={index + 1}
-          title={item.title}
-          artist={item.artist}
-          duration={item.duration}
-          imageUrl={item.image}
-          trackId={item.id || String(index)}
-        />
+        <div className="flex items-center gap-4 rounded-lg bg-white/5 p-3 hover:bg-white/10">
+          <span className="w-4 text-white/60">{index + 1}</span>
+          <Image
+            src={item.image}
+            alt={item.title || "Song cover"}
+            width={40}
+            height={40}
+            className="rounded"
+          />
+          <div className="flex-1">
+            <h4 className="text-white">{item.title || "Unknown Title"}</h4>
+            <p className="text-sm text-white/60">
+              {item.artist || "Unknown Artist"}
+            </p>
+          </div>
+          <span className="text-sm text-white/60">
+            {item.duration || "0:00"}
+          </span>
+        </div>
       );
     }
 
@@ -58,7 +80,7 @@ export default function SearchResultSection({
         <div className="relative aspect-square h-[72px] w-[72px] flex-shrink-0 overflow-hidden sm:h-auto sm:w-full">
           <Image
             src={item.image}
-            alt={item.name || item.title}
+            alt={item.name || item.title || "Item image"}
             fill
             className={`object-cover ${title === "Artists" ? "rounded-full" : "rounded-lg"}`}
           />

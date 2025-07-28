@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Clock, TrendingUp, Users, Music } from "lucide-react";
+import { Clock, TrendingUp, Users, Music, Activity } from "lucide-react";
+import { motion } from "framer-motion";
 
 // Mock data
 const mockData = {
@@ -28,21 +29,21 @@ const mockData = {
   activeFriends: [
     {
       name: "Alex",
-      avatar: "bg-blue-500",
+      avatar: "bg-primary",
       currentTrack: "Bohemian Rhapsody",
       artist: "Queen",
       timeListening: 142, // seconds
     },
     {
       name: "Sarah",
-      avatar: "bg-pink-500",
+      avatar: "bg-secondary",
       currentTrack: "Shape of You",
       artist: "Ed Sheeran",
       timeListening: 89,
     },
     {
       name: "Mike",
-      avatar: "bg-green-500",
+      avatar: "bg-neutral-600",
       currentTrack: "Starboy",
       artist: "The Weeknd",
       timeListening: 201,
@@ -60,6 +61,12 @@ const mockData = {
       track: "Flowers",
       artist: "Miley Cyrus",
       time: "15m ago",
+    },
+    {
+      action: "Shared",
+      track: "As It Was",
+      artist: "Harry Styles",
+      time: "1h ago",
     },
   ],
 };
@@ -95,215 +102,183 @@ export default function WidgetBoard() {
   };
 
   return (
-    <div className="w-full">
-      <div className="grid grid-cols-8 grid-rows-4 gap-3 rounded-3xl">
-        {/* Session Timer - Top Left */}
-        {/* Top Tracks - Top Right */}
-        <div className="relative col-span-5 row-span-2 overflow-hidden rounded-2xl border border-gray-700/50 bg-gradient-to-br from-purple-900/80 to-purple-800/80 p-3 backdrop-blur-xl">
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-purple-800/20"></div>
-
-          <div className="relative z-10 flex h-full flex-col">
-            <div className="mb-3 flex items-center gap-2">
-              <TrendingUp className="h-4 w-4 text-purple-400" />
-              <h3 className="text-sm font-semibold text-white">Top Tracks</h3>
+    <div className="w-full p-4">
+      <div className="grid grid-cols-12 gap-4">
+        {/* Session Timer */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="col-span-12 rounded-lg border border-neutral-700/50 bg-neutral-800/50 p-4 backdrop-blur-xl md:col-span-3"
+        >
+          <div className="mb-3 flex items-center gap-2">
+            <div className="bg-primary/20 flex h-8 w-8 items-center justify-center rounded-lg">
+              <Clock className="text-primary h-4 w-4" />
             </div>
-
-            <div className="flex-1 space-y-2">
-              {mockData.topTracks.map((track) => (
-                <div
-                  key={track.rank}
-                  className="flex items-center gap-2 rounded-lg bg-white/5 p-2"
-                >
-                  <div className="flex h-6 w-6 items-center justify-center rounded-md bg-purple-500/80 text-xs font-bold text-white">
-                    {track.rank}
-                  </div>
-                  <div className="h-6 w-6 rounded-md bg-gradient-to-br from-purple-400 to-purple-600"></div>
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate text-xs font-medium text-white">
-                      {track.title}
-                    </p>
-                    <p className="truncate text-xs text-purple-300">
-                      {track.artist}
-                    </p>
-                  </div>
-                  <div className="text-xs text-purple-400">{track.plays}</div>
-                </div>
-              ))}
-            </div>
+            <h3 className="text-sm font-medium text-white">Session Time</h3>
           </div>
-        </div>
-        <div className="relative col-span-1 row-span-1 overflow-hidden rounded-2xl border border-gray-700/50 bg-gradient-to-br from-blue-900/80 to-blue-800/80 p-3 backdrop-blur-xl">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-blue-800/20"></div>
 
-          <div className="relative z-10 flex h-full flex-col">
-            <div className="mb-2 flex items-center gap-2">
-              <Clock className="h-4 w-4 text-blue-400" />
-              <span className="text-xs font-medium text-blue-400">Session</span>
+          <div className="text-center">
+            <div className="mb-2 font-mono text-2xl font-bold text-white">
+              {formatTime(sessionTime)}
             </div>
-
-            <div className="flex flex-1 flex-col justify-center text-center">
-              <div className="mb-1 font-mono text-xl font-bold text-white">
-                {formatTime(sessionTime)}
-              </div>
-              {/* <div className="mb-3 text-xs text-blue-300">
-                {isSessionActive ? "Active" : "Stopped"}
-              </div> */}
+            <div className="mb-3 text-xs text-neutral-400">
+              {isSessionActive ? "Active listening" : "Paused"}
             </div>
-
-            {/* <button
+            <button
               onClick={() => setIsSessionActive(!isSessionActive)}
-              className={`w-full rounded-lg py-1.5 text-xs font-medium transition-all ${
+              className={`w-full rounded-lg px-3 py-2 text-xs font-medium transition-all ${
                 isSessionActive
-                  ? "bg-red-500/80 text-white hover:bg-red-500"
-                  : "bg-white/90 text-black hover:bg-white"
+                  ? "border border-red-500/30 bg-red-500/20 text-red-400 hover:bg-red-500/30"
+                  : "bg-primary/20 border-primary/30 text-primary hover:bg-primary/30 border"
               }`}
             >
-              {isSessionActive ? "Stop" : "Start"}
-            </button> */}
+              {isSessionActive ? "Stop Session" : "Start Session"}
+            </button>
           </div>
-        </div>
-        {/* Active Friends - Bottom Left */}
-        <div className="relative col-span-2 row-span-4 overflow-hidden rounded-2xl border border-gray-700/50 bg-gradient-to-br from-green-900/80 to-green-800/80 p-3 backdrop-blur-xl">
-          <div className="absolute inset-0 bg-gradient-to-br from-green-600/20 to-green-800/20"></div>
+        </motion.div>
 
-          <div className="relative z-10 flex h-full flex-col">
-            <div className="mb-3 flex items-center gap-2">
-              <Users className="h-4 w-4 text-green-400" />
-              <h3 className="text-sm font-semibold text-white">
-                Friends Online
-              </h3>
-              <div className="ml-auto rounded-full bg-green-500/20 px-2 py-0.5">
-                <span className="text-xs text-green-400">
-                  {mockData.activeFriends.length}
-                </span>
-              </div>
+        {/* Top Tracks */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
+          className="col-span-12 rounded-lg border border-neutral-700/50 bg-neutral-800/50 p-4 backdrop-blur-xl md:col-span-5"
+        >
+          <div className="mb-4 flex items-center gap-2">
+            <div className="bg-primary/20 flex h-8 w-8 items-center justify-center rounded-lg">
+              <TrendingUp className="text-primary h-4 w-4" />
             </div>
+            <h3 className="text-sm font-medium text-white">Top Tracks</h3>
+            <div className="ml-auto text-xs text-neutral-500">This week</div>
+          </div>
 
-            <div className="space-y-2">
-              {mockData.activeFriends.map((friend, index) => (
+          <div className="space-y-3">
+            {mockData.topTracks.map((track, index) => (
+              <motion.div
+                key={track.rank}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: 0.1 + index * 0.05 }}
+                className="flex cursor-pointer items-center gap-3 rounded-lg p-2 transition-colors hover:bg-neutral-700/30"
+              >
                 <div
-                  key={index}
-                  className="flex items-center gap-2 rounded-lg bg-white/5 p-2"
+                  className={`flex h-6 w-6 items-center justify-center rounded-md text-xs font-bold ${
+                    track.rank === 1
+                      ? "bg-primary text-black"
+                      : track.rank === 2
+                        ? "bg-secondary text-white"
+                        : "bg-neutral-600 text-white"
+                  }`}
                 >
-                  <div
-                    className={`h-6 w-6 ${friend.avatar} flex items-center justify-center rounded-full text-xs font-bold text-white`}
-                  >
-                    {friend.name[0]}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-1">
-                      <p className="text-xs font-medium text-white">
-                        {friend.name}
-                      </p>
-                      <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-400"></div>
-                    </div>
-                    <p className="truncate text-xs text-green-300">
-                      {friend.currentTrack} • {friend.artist}
-                    </p>
-                  </div>
-                  <div className="text-xs text-green-400">
+                  {track.rank}
+                </div>
+                <div className="h-8 w-8 rounded-md bg-neutral-600"></div>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-medium text-white">
+                    {track.title}
+                  </p>
+                  <p className="truncate text-xs text-neutral-400">
+                    {track.artist}
+                  </p>
+                </div>
+                <div className="text-xs text-neutral-500">{track.plays}</div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Activity Indicator */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
+          className="col-span-12 rounded-lg border border-neutral-700/50 bg-neutral-800/50 p-4 backdrop-blur-xl md:col-span-4"
+        >
+          <div className="mb-4 flex items-center gap-2">
+            <div className="bg-secondary/20 flex h-8 w-8 items-center justify-center rounded-lg">
+              <Activity className="text-secondary h-4 w-4" />
+            </div>
+            <h3 className="text-sm font-medium text-white">Activity</h3>
+          </div>
+
+          <div className="space-y-3">
+            {mockData.recentActivity.map((activity, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: 0.2 + index * 0.05 }}
+                className="flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-neutral-700/30"
+              >
+                <div className="mt-0.5 h-6 w-6 flex-shrink-0 rounded-md bg-neutral-600"></div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs text-white">
+                    <span className="text-secondary font-medium">
+                      {activity.action}
+                    </span>{" "}
+                    {activity.track}
+                  </p>
+                  <p className="truncate text-xs text-neutral-400">
+                    {activity.artist} • {activity.time}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Friends Online */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.3 }}
+          className="col-span-12 rounded-lg border border-neutral-700/50 bg-neutral-800/50 p-4 backdrop-blur-xl"
+        >
+          <div className="mb-4 flex items-center gap-2">
+            <div className="bg-primary/20 flex h-8 w-8 items-center justify-center rounded-lg">
+              <Users className="text-primary h-4 w-4" />
+            </div>
+            <h3 className="text-sm font-medium text-white">Friends Online</h3>
+            <div className="ml-auto flex items-center gap-2">
+              <div className="h-2 w-2 animate-pulse rounded-full bg-green-400"></div>
+              <span className="text-xs text-neutral-400">
+                {mockData.activeFriends.length} online
+              </span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+            {mockData.activeFriends.map((friend, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.3 + index * 0.1 }}
+                className="flex items-center gap-3 rounded-lg bg-neutral-700/30 p-3 transition-colors hover:bg-neutral-700/50"
+              >
+                <div
+                  className={`h-10 w-10 ${friend.avatar} relative flex items-center justify-center rounded-full text-sm font-bold text-white`}
+                >
+                  {friend.name[0]}
+                  <div className="absolute -right-0.5 -bottom-0.5 h-3 w-3 rounded-full border-2 border-neutral-800 bg-green-400"></div>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-medium text-white">
+                    {friend.name}
+                  </p>
+                  <p className="truncate text-xs text-neutral-400">
+                    {friend.currentTrack}
+                  </p>
+                  <p className="text-xs text-neutral-500">
+                    {friend.artist} •{" "}
                     {formatListeningTime(friend.timeListening)}
-                  </div>
+                  </p>
                 </div>
-              ))}
-            </div>
+              </motion.div>
+            ))}
           </div>
-        </div>
-        <div className="relative col-span-1 row-span-1 overflow-hidden rounded-2xl border border-gray-700/50 bg-gradient-to-br from-blue-900/80 to-blue-800/80 p-3 backdrop-blur-xl">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-blue-800/20"></div>
-
-          <div className="relative z-10 flex h-full flex-col">
-            <div className="mb-2 flex items-center gap-2">
-              <Clock className="h-4 w-4 text-blue-400" />
-              <span className="text-xs font-medium text-blue-400">Session</span>
-            </div>
-
-            <div className="flex flex-1 flex-col justify-center text-center">
-              <div className="mb-1 font-mono text-xl font-bold text-white">
-                {formatTime(sessionTime)}
-              </div>
-              {/* <div className="mb-3 text-xs text-blue-300">
-                {isSessionActive ? "Active" : "Stopped"}
-              </div> */}
-            </div>
-
-            {/* <button
-              onClick={() => setIsSessionActive(!isSessionActive)}
-              className={`w-full rounded-lg py-1.5 text-xs font-medium transition-all ${
-                isSessionActive
-                  ? "bg-red-500/80 text-white hover:bg-red-500"
-                  : "bg-white/90 text-black hover:bg-white"
-              }`}
-            >
-              {isSessionActive ? "Stop" : "Start"}
-            </button> */}
-          </div>
-        </div>
-        {/* Recent Activity - Bottom Right */}
-        <div className="relative col-span-3 row-span-2 overflow-hidden rounded-2xl border border-gray-700/50 bg-gradient-to-br from-pink-900/80 to-pink-800/80 p-3 backdrop-blur-xl">
-          <div className="absolute inset-0 bg-gradient-to-br from-pink-600/20 to-pink-800/20"></div>
-
-          <div className="relative z-10 flex h-full flex-col">
-            <div className="mb-3 flex items-center gap-2">
-              <Music className="h-4 w-4 text-pink-400" />
-              <h3 className="text-sm font-semibold text-white">
-                Recent Activity
-              </h3>
-            </div>
-
-            <div className="flex-1 space-y-2">
-              {mockData.recentActivity.map((activity, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-2 rounded-lg bg-white/5 p-2"
-                >
-                  <div className="h-6 w-6 rounded-md bg-gradient-to-br from-pink-400 to-pink-600"></div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-xs text-white">
-                      <span className="text-pink-400">{activity.action}</span>{" "}
-                      {activity.track}
-                    </p>
-                    <p className="truncate text-xs text-pink-300">
-                      {activity.artist} • {activity.time}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>{" "}
-        <div className="relative col-span-3 row-span-2 overflow-hidden rounded-2xl border border-gray-700/50 bg-gradient-to-br from-pink-900/80 to-pink-800/80 p-3 backdrop-blur-xl">
-          <div className="absolute inset-0 bg-gradient-to-br from-pink-600/20 to-pink-800/20"></div>
-
-          <div className="relative z-10 flex h-full flex-col">
-            <div className="mb-3 flex items-center gap-2">
-              <Music className="h-4 w-4 text-pink-400" />
-              <h3 className="text-sm font-semibold text-white">
-                Recent Activity
-              </h3>
-            </div>
-
-            <div className="flex-1 space-y-2">
-              {mockData.recentActivity.map((activity, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-2 rounded-lg bg-white/5 p-2"
-                >
-                  <div className="h-6 w-6 rounded-md bg-gradient-to-br from-pink-400 to-pink-600"></div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-xs text-white">
-                      <span className="text-pink-400">{activity.action}</span>{" "}
-                      {activity.track}
-                    </p>
-                    <p className="truncate text-xs text-pink-300">
-                      {activity.artist} • {activity.time}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

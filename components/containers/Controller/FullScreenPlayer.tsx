@@ -132,7 +132,13 @@ export function FullScreenPlayer() {
                 onClick={previousTrack}
               />
               <button
-                onClick={isPlaying ? pause : play}
+                onClick={() => {
+                  if (isPlaying) {
+                    pause();
+                  } else {
+                    play();
+                  }
+                }}
                 className="rounded-full bg-white p-4 hover:opacity-90"
               >
                 {isPlaying ? (
@@ -191,7 +197,7 @@ export function FullScreenPlayer() {
                     min="0"
                     value={volume}
                     max="100"
-                    onChange={handleVolumeChange}
+                    onChange={(e) => handleVolumeChange(Number(e.target.value))}
                     className="absolute top-0 left-0 h-full w-full cursor-pointer opacity-0"
                   />
                 </div>

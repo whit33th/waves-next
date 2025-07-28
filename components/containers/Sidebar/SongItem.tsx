@@ -28,55 +28,61 @@ export default function SongItem({
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.1, delay: index * 0.1, ease: "easeInOut" }}
-      onDoubleClick={handlePlay}
-      className={`group flex cursor-pointer items-center justify-between rounded-lg p-2 transition select-none hover:bg-neutral-900 ${
-        showAsPlaying ? "bg-neutral-800" : ""
-      }`}
-    >
-      <div className="flex min-w-0 flex-1 gap-4">
-        <div
-          onClick={handlePlay}
-          className="relative flex h-10 w-10 flex-shrink-0 items-center justify-center"
-        >
-          <Image
-            className="aspect-square rounded object-cover"
-            src={song.coverUrl ?? ""}
-            alt={song.album?.title || "No title"}
-            width={40}
-            height={40}
-          />
-          <button className="absolute top-1/2 left-1/2 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/75 text-neutral-900 opacity-0 transition *:fill-current group-hover:opacity-100">
-            {showAsPlaying && isPlaying ? (
-              <Pause size={16} />
-            ) : (
-              <Play size={16} />
-            )}
-          </button>
-        </div>
-        <div className="flex min-w-0 flex-1 flex-col gap-1">
-          <h3
-            className={`truncate text-sm ${
-              showAsPlaying ? "text-white" : "text-neutral-200"
-            }`}
+    <>
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.1, delay: index * 0.1, ease: "easeInOut" }}
+        onDoubleClick={handlePlay}
+        className={`group flex cursor-pointer items-center justify-between gap-4 rounded-lg p-2 transition select-none hover:bg-neutral-900 ${currentTrackIndex > index ? "hidden" : "block"} ${
+          showAsPlaying ? "bg-neutral-800" : ""
+        }`}
+      >
+        <div className="flex min-w-0 flex-1 gap-4">
+          <div
+            onClick={handlePlay}
+            className="relative flex h-10 w-10 flex-shrink-0 items-center justify-center"
           >
-            {song.title}
-          </h3>
-          <Link
-            href={`/artist/${encodeURIComponent(song.artist?.name ?? "unknown")}`}
-            className="w-fit truncate text-xs text-neutral-500 hover:underline"
-          >
-            {song.artist?.name ?? "Unknown Artist"}
-          </Link>
+            <Image
+              className="aspect-square rounded object-cover"
+              src={song.coverUrl ?? ""}
+              alt={song.album?.title || "No title"}
+              width={40}
+              height={40}
+            />
+            <button className="absolute top-1/2 left-1/2 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/75 text-neutral-900 opacity-0 transition *:fill-current group-hover:opacity-100">
+              {showAsPlaying && isPlaying ? (
+                <Pause size={16} />
+              ) : (
+                <Play size={16} />
+              )}
+            </button>
+          </div>
+          <div className="flex min-w-0 flex-1 flex-col justify-center gap-1.5">
+            <h3
+              className={`truncate text-sm ${
+                showAsPlaying ? "text-white" : "text-neutral-200"
+              }`}
+            >
+              {song.title}
+            </h3>
+            <Link
+              href={`/artist/${encodeURIComponent(song.artist?.name ?? "unknown")}`}
+              className="w-fit truncate text-xs text-neutral-500 hover:underline"
+            >
+              {song.artist?.name ?? "Unknown Artist"}
+            </Link>
+          </div>
         </div>
-      </div>
-      <div className="flex flex-shrink-0 items-center gap-2">
-        {/* Моковое время */}
-        <p className="text-xs text-neutral-500">4:13</p>
-      </div>
-    </motion.div>
+        <div className="flex flex-shrink-0 items-center gap-2">
+          {/* Моковое время */}
+          <p className="text-xs text-neutral-500">4:13</p>
+        </div>
+      </motion.div>
+
+      {isCurrentTrack && currentTrackIndex + 1 !== trackList.length && (
+        <div className="bg-border my-4 h-[1px] w-full"></div>
+      )}
+    </>
   );
 }

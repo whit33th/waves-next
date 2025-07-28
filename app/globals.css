@@ -17,7 +17,9 @@
   --color-button-text: #000000;
   --color-input-bg: #030303;
 }
-
+* {
+  line-height: 1;
+}
 @layer base {
   .controller {
     @apply rounded-lg bg-black p-4 text-white;

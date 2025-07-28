@@ -12,11 +12,13 @@ export default function WriteEffectText({
   interval = 50,
 }: WriteEffectTextProps) {
   const [result, setResult] = useState("");
+  const [isComplete, setIsComplete] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const indexRef = useRef(0);
 
   useEffect(() => {
     setResult("");
+    setIsComplete(false);
     indexRef.current = 0;
 
     if (intervalRef.current) {
@@ -31,6 +33,7 @@ export default function WriteEffectText({
         if (intervalRef.current) {
           clearInterval(intervalRef.current);
         }
+        setIsComplete(true);
       }
     }, interval);
 
@@ -43,16 +46,15 @@ export default function WriteEffectText({
 
   return (
     <motion.p
-      initial={{ scale: 0.8 }}
-      animate={{ scale: 1 }}
+      initial={{ scale: 1 }}
+      animate={{ scale: isComplete ? [1, 1.1] : 1 }}
       transition={{
         type: "spring",
         stiffness: 250,
         damping: 12,
         duration: 0.8,
       }}
-      key={result.length}
-      className="inline-block w-full"
+      className="inline-block text-center will-change-transform"
     >
       {result}
     </motion.p>

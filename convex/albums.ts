@@ -37,3 +37,22 @@ export const getAllAlbums = query({
     );
   },
 });
+
+export const getAlbumById = query({
+  args: { albumId: v.id("albums") },
+  handler: async (ctx, args) => {
+    const album = await ctx.db.get(args.albumId);
+    if (!album) {
+      return null;
+    }
+
+    const artist = await ctx.db.get(album.artistId);
+    const coverUrl = await ctx.storage.getUrl(album.cover);
+
+    return {
+      ...album,
+      artist,
+      coverUrl,
+    };
+  },
+});

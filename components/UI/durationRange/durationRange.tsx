@@ -25,7 +25,7 @@ export default function DurationRange() {
             min="0"
             defaultValue={0}
             max="100"
-            onChange={handleSeek}
+            onChange={(e) => handleSeek(Number(e.target.value))}
             className="absolute h-full w-full cursor-pointer opacity-0"
           />
         </div>

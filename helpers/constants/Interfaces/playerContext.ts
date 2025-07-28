@@ -43,8 +43,8 @@ export interface IPlayerContextType {
   nextTrack: () => void;
   previousTrack: () => void;
   handleSetTrackList: (tracks: Track[]) => void;
-  handleSeek: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleVolumeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSeek: (value: number) => void;
+  handleVolumeChange: (value: number) => void;
   handlePlayTrack: (track: Track) => void;
   handleMute: () => void;
 

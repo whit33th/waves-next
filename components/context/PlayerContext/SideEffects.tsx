@@ -76,7 +76,7 @@ export default function SideEffects() {
     if (!audio) return;
     const handleEnded = () => {
       nextTrack();
-      setIsPlaying(true); // always start next track
+      setIsPlaying(true);
     };
     audio.addEventListener("ended", handleEnded);
     return () => {
@@ -108,7 +108,10 @@ export default function SideEffects() {
     const audio = audioRef.current;
     if (!audio) return;
     const handleError = (e: Event) => {
-      console.error("Audio error:", e);
+      // Log audio errors in development only
+      if (process.env.NODE_ENV === "development") {
+        console.error("Audio playback error:", e);
+      }
       setIsPlaying(false);
     };
     audio.addEventListener("error", handleError);

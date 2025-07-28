@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePlayer } from "../context/PlayerContext/PlayerContext";
 import { useQuery } from "convex-helpers/react/cache";
+import { useRouter } from "next/navigation";
 
 type Album = FunctionReturnType<typeof api.albums.getAllAlbums>[number];
 
@@ -19,7 +20,12 @@ const Album = (props: Album) => {
     e.stopPropagation();
     handleSetTrackList(albumTrackList ?? []);
   };
-
+  const router = useRouter();
+  function handleArtistClick(e: React.MouseEvent<HTMLAnchorElement>) {
+    e.preventDefault();
+    e.stopPropagation();
+    router.push(`/artist/${props.artist?._id}`);
+  }
   return (
     <Link
       href={`/album/${props._id}`}
@@ -40,11 +46,14 @@ const Album = (props: Album) => {
           <Play fill="currentColor" className="h-5 w-5" />
         </button>
       </div>
-      <div className="mt-2">
+      <div className="mt-3 space-y-1">
         <h3 className="line-clamp-1">{props.title || "No title"}</h3>
-        <p className="line-clamp-2 text-xs text-gray-400">
+        <span
+          className="line-clamp-2 w-fit cursor-pointer text-xs text-gray-400 hover:underline"
+          onClick={handleArtistClick}
+        >
           {props.artist?.name || "Unknown Artist"}
-        </p>
+        </span>
       </div>
     </Link>
   );

@@ -23,7 +23,7 @@ export default function Sidebar({ children }: React.PropsWithChildren) {
           <Search />
           <div className="flex-1 overflow-auto overflow-x-hidden">
             <TrackCoverLayout />
-            {children}
+            <div className="*:p-6">{children}</div>
           </div>
         </main>
 

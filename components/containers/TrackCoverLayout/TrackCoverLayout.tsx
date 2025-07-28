@@ -46,8 +46,8 @@ export default function TrackCoverLayout() {
                 trackList[currentTrackIndex]?.coverUrl || "/default-cover.jpg"
               }
               alt="playing now"
-              width={400}
-              height={400}
+              width={300}
+              height={300}
               className="h-full w-full rounded-2xl object-cover object-center drop-shadow-2xl"
               priority
             />
