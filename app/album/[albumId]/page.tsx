@@ -1,16 +1,16 @@
 "use client";
+import { usePlayer } from "@/components/context/PlayerContext/PlayerContext";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
-import { useQuery } from "convex/react";
-import { Play, Clock, User } from "lucide-react";
-import Image from "next/image";
-import { notFound } from "next/navigation";
-import { usePlayer } from "@/components/context/PlayerContext/PlayerContext";
-import { use, useState } from "react";
-import { motion } from "framer-motion";
-import useColorThief from "use-color-thief";
-import Link from "next/link";
 import { Track } from "@/helpers/constants/Interfaces/playerContext";
+import { useQuery } from "convex/react";
+import { motion } from "framer-motion";
+import { Play, User } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { use } from "react";
+import useColorThief from "use-color-thief";
 
 interface AlbumPageProps {
   params: Promise<{ albumId: string }>;

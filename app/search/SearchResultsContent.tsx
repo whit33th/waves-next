@@ -7,6 +7,7 @@ export default function SearchResultsContent({
 }: {
   searchQuery: string;
 }) {
+  console.log(searchQuery);
   return (
     <div className="space-y-12">
       <SearchResultSection

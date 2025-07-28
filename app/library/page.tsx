@@ -1,5 +1,3 @@
-import { AlbumSection } from "@/components/UI/MusicGrid";
-
 const playlists = [
   {
     title: "Favorite Tracks",

@@ -4,8 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 
 export default function AnimatedBackground() {
-  const { currentTrackIndex, isMaximized, trackList, setCurrentTrackIndex } =
-    usePlayer();
+  const { currentTrackIndex, isMaximized, trackList } = usePlayer();
   return (
     trackList.length > 0 &&
     trackList[currentTrackIndex]?.coverUrl && (

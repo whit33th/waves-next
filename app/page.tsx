@@ -1,11 +1,10 @@
 "use client";
 
 import WidgetBoard from "@/components/containers/Controller/WidgetBoard";
+import { AlbumGridSkeleton } from "@/components/UI/LoadingSkeleton";
 import { AlbumSection } from "@/components/UI/MusicGrid";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex-helpers/react/cache";
-import Image from "next/image";
-import { AlbumGridSkeleton } from "@/components/UI/LoadingSkeleton";
 
 export default function HomePage() {
   const albums = useQuery(api.albums.getAllAlbums);

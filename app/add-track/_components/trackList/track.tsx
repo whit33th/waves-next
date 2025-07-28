@@ -1,4 +1,4 @@
-import { Music, Play, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import React from "react";
 import PlayButton from "../../../../components/UI/buttons/PlayButton";
 

@@ -4,8 +4,8 @@ import { usePlayer } from "@/components/context/PlayerContext/PlayerContext";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import WriteEffectText from "../Effects/WriteEffectText";
 import { useEffect } from "react";
+import WriteEffectText from "../Effects/WriteEffectText";
 
 export default function TrackCoverLayout() {
   const { isMaximized, setIsMaximized, currentTrackIndex, trackList } =
@@ -20,7 +20,7 @@ export default function TrackCoverLayout() {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [isMaximized]);
+  }, [isMaximized, setIsMaximized]);
 
   if (!isMaximized || trackList.length === 0) return;
 

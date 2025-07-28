@@ -5,7 +5,6 @@ import { useState } from "react";
 import SongList from "./SongList";
 
 export default function UniversalSidebar() {
-  const [currentView, setCurrentView] = useState("queue");
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 

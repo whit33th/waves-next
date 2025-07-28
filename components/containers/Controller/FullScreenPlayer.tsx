@@ -15,8 +15,7 @@ import {
   Shuffle,
 } from "lucide-react";
 import Image from "next/image";
-import { useEffect } from "react";
-import { unstable_Activity as Activity } from "react";
+import { unstable_Activity as Activity, useEffect } from "react";
 
 export function FullScreenPlayer() {
   const {
@@ -48,7 +47,7 @@ export function FullScreenPlayer() {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [isFullPlayerOpen]);
+  }, [isFullPlayerOpen, setIsFullPlayerOpen]);
 
   if (!isFullPlayerOpen) return null;
 

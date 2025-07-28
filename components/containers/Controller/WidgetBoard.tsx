@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Clock, TrendingUp, Users, Music, Activity } from "lucide-react";
 import { motion } from "framer-motion";
+import { Activity, Clock, TrendingUp, Users } from "lucide-react";
+import { useEffect, useState } from "react";
 
 // Mock data
 const mockData = {

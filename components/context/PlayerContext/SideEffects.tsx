@@ -16,8 +16,6 @@ export default function SideEffects() {
     durationRef,
     durationBodyRef,
     nextTrack,
-
-    play,
   } = usePlayer();
 
   const pathname = usePathname();

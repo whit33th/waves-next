@@ -1,12 +1,12 @@
 "use client";
 import { api } from "@/convex/_generated/api";
+import { useQuery } from "convex-helpers/react/cache";
 import { FunctionReturnType } from "convex/server";
-import { Heart, Play } from "lucide-react";
+import { Play } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePlayer } from "../context/PlayerContext/PlayerContext";
-import { useQuery } from "convex-helpers/react/cache";
 import { useRouter } from "next/navigation";
+import { usePlayer } from "../context/PlayerContext/PlayerContext";
 
 type Album = FunctionReturnType<typeof api.albums.getAllAlbums>[number];
 

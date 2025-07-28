@@ -1,11 +1,7 @@
 "use client";
 
-import {
-  IPlayerContextType,
-  Track,
-} from "@/helpers/constants/Interfaces/playerContext";
-import { usePathname } from "next/navigation";
-import { createContext, useContext, useRef, ReactNode } from "react";
+import { IPlayerContextType } from "@/helpers/constants/Interfaces/playerContext";
+import { createContext, ReactNode, useContext, useRef } from "react";
 import SideEffects from "./SideEffects";
 import { usePlayerStore } from "./store";
 
