@@ -6,12 +6,12 @@ import { Play } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { usePlayer } from "../context/PlayerContext/PlayerContext";
+import { usePlayerStore } from "../context/PlayerContext/store";
 
 type Album = FunctionReturnType<typeof api.albums.getAllAlbums>[number];
 
 const Album = (props: Album) => {
-  const { handleSetTrackList } = usePlayer();
+  const handleSetTrackList = usePlayerStore((s) => s.handleSetTrackList);
   const albumTrackList = useQuery(api.tracks.getTracks, {
     albumId: props._id,
   });

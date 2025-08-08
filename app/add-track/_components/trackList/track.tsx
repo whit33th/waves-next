@@ -1,6 +1,6 @@
 import { Trash2 } from "lucide-react";
 import React from "react";
-import PlayButton from "../../../../components/UI/buttons/PlayButton";
+import PlayButton from "../../../../components/UI/buttons/ControllerButtons/PlayButton";
 
 interface TrackProps {
   track?: File;
@@ -62,26 +62,24 @@ export default function Track({
           </button>
         </div>
       </div>
-      <div>
-        <svg
-          width="10"
-          height="20"
-          viewBox="0 0 10 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-          className="mx-auto text-neutral-400"
-        >
-          {/* Left column */}
-          <circle cx="3" cy="4" r="1.5" fill="currentColor" />
-          <circle cx="3" cy="10" r="1.5" fill="currentColor" />
-          <circle cx="3" cy="16" r="1.5" fill="currentColor" />
-          {/* Right column */}
-          <circle cx="8" cy="4" r="1.5" fill="currentColor" />
-          <circle cx="8" cy="10" r="1.5" fill="currentColor" />
-          <circle cx="8" cy="16" r="1.5" fill="currentColor" />
-        </svg>
-      </div>
+      <svg
+        width="10"
+        height="20"
+        viewBox="0 0 10 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        className="mx-auto text-neutral-400"
+      >
+        {/* Left column */}
+        <circle cx="3" cy="4" r="1.5" fill="currentColor" />
+        <circle cx="3" cy="10" r="1.5" fill="currentColor" />
+        <circle cx="3" cy="16" r="1.5" fill="currentColor" />
+        {/* Right column */}
+        <circle cx="8" cy="4" r="1.5" fill="currentColor" />
+        <circle cx="8" cy="10" r="1.5" fill="currentColor" />
+        <circle cx="8" cy="16" r="1.5" fill="currentColor" />
+      </svg>
     </li>
   );
 }

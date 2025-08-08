@@ -47,14 +47,14 @@ export default function WriteEffectText({
   return (
     <motion.p
       initial={{ scale: 1 }}
-      animate={{ scale: isComplete ? [1, 1.1] : 1 }}
+      animate={{ scale: isComplete ? [0.9, 1] : 0.9 }}
       transition={{
         type: "spring",
         stiffness: 250,
         damping: 12,
         duration: 0.8,
       }}
-      className="inline-block text-center will-change-transform"
+      className="text-center"
     >
       {result}
     </motion.p>

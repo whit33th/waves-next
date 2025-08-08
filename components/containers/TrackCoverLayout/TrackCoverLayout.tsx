@@ -1,6 +1,6 @@
 "use client";
 
-import { usePlayer } from "@/components/context/PlayerContext/PlayerContext";
+import { usePlayerStore } from "@/components/context/PlayerContext/store";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,8 +8,10 @@ import { useEffect } from "react";
 import WriteEffectText from "../Effects/WriteEffectText";
 
 export default function TrackCoverLayout() {
-  const { isMaximized, setIsMaximized, currentTrackIndex, trackList } =
-    usePlayer();
+  const trackList = usePlayerStore((s) => s.trackList);
+  const currentTrackIndex = usePlayerStore((s) => s.currentTrackIndex);
+  const isMaximized = usePlayerStore((s) => s.isMaximized);
+  const setIsMaximized = usePlayerStore((s) => s.setIsMaximized);
 
   useEffect(() => {
     const handleResize = () => {

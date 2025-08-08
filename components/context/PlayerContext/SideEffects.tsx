@@ -1,22 +1,19 @@
 "use client";
-import { usePathname } from "next/navigation";
 import { useEffect } from "react";
-import { usePlayer } from "./PlayerContext";
+import { usePathname } from "next/navigation";
+import { usePlayerStore } from "@/components/context/PlayerContext/store";
+import { usePlayerBase } from "@/components/context/PlayerContext/PlayerContext";
 
 export default function SideEffects() {
-  const {
-    trackList,
-    currentTrackIndex,
-    setIsMaximized,
-    audioRef,
-    isPlaying,
-    setIsPlaying,
-    formatTime,
-    setTime,
-    durationRef,
-    durationBodyRef,
-    nextTrack,
-  } = usePlayer();
+  const trackList = usePlayerStore((s) => s.trackList);
+  const currentTrackIndex = usePlayerStore((s) => s.currentTrackIndex);
+  const setIsMaximized = usePlayerStore((s) => s.setIsMaximized);
+  const isPlaying = usePlayerStore((s) => s.isPlaying);
+  const setTime = usePlayerStore((s) => s.setTime);
+  const nextTrack = usePlayerStore((s) => s.nextTrack);
+  const formatTime = usePlayerStore((s) => s.formatTime);
+
+  const { audioRef, durationRef, durationBodyRef } = usePlayerBase();
 
   const pathname = usePathname();
 
@@ -74,53 +71,26 @@ export default function SideEffects() {
     if (!audio) return;
     const handleEnded = () => {
       nextTrack();
-      setIsPlaying(true);
     };
     audio.addEventListener("ended", handleEnded);
     return () => {
       audio.removeEventListener("ended", handleEnded);
     };
-  }, [audioRef, nextTrack, setIsPlaying]);
+  }, [audioRef, nextTrack]);
 
   // 5. Playback control: play/pause on isPlaying or track change
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    if (isPlaying) {
-      const tryPlay = () => {
-        audio.play().catch(() => setIsPlaying(false));
-      };
-      if (audio.readyState >= 3) {
-        tryPlay();
-      } else {
-        audio.addEventListener("canplay", tryPlay);
-        return () => audio.removeEventListener("canplay", tryPlay);
-      }
-    } else {
-      audio.pause();
+    if (isPlaying) audio.play().catch(() => {});
+    else audio.pause();
+  }, [isPlaying, audioRef]);
+
+  // 6. UI: reset maximized on route change
+  useEffect(() => {
+    if (pathname === "/") {
+      setIsMaximized(false);
     }
-  }, [audioRef, isPlaying, currentTrackIndex, setIsPlaying]);
-
-  // 6. Error handling
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    const handleError = (e: Event) => {
-      // Log audio errors in development only
-      if (process.env.NODE_ENV === "development") {
-        console.error("Audio playback error:", e);
-      }
-      setIsPlaying(false);
-    };
-    audio.addEventListener("error", handleError);
-    return () => {
-      audio.removeEventListener("error", handleError);
-    };
-  }, [audioRef, setIsPlaying]);
-
-  // 7. UI: reset maximized on route change
-  useEffect(() => {
-    setIsMaximized(false);
   }, [pathname, setIsMaximized]);
 
   return null;

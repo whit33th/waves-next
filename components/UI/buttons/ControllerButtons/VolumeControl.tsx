@@ -101,7 +101,7 @@ export default function VolumeControl() {
       {/* Vertical popover */}
       <div
         className={
-          `absolute bottom-full left-1/2 z-30 mb-2 origin-bottom -translate-x-1/2 rounded-lg border border-white/10 bg-neutral-900/80 px-3 py-4 shadow-lg backdrop-blur-lg transition-all duration-200 ` +
+          `absolute bottom-full left-1/2 z-30 mb-2 origin-bottom -translate-x-1/2 rounded-full border border-white/5 bg-neutral-900/70 px-2 py-3 shadow-lg backdrop-blur-lg transition-all duration-200 ` +
           (open
             ? "pointer-events-auto scale-100 opacity-100"
             : "pointer-events-none scale-90 opacity-0")
@@ -113,13 +113,13 @@ export default function VolumeControl() {
           {/* Track container */}
           <div
             ref={barRef}
-            className="relative h-28 w-2 rounded-full bg-neutral-100/15 select-none"
+            className="relative h-28 w-1.5 rounded-full bg-neutral-100/15 select-none"
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={handlePointerUp}
           >
             <div
-              className="absolute bottom-0 left-0 w-full rounded-full bg-white"
+              className="bg-primary absolute bottom-0 left-0 w-full cursor-pointer rounded-full"
               style={{ height: `${volumeValue}%` }}
             />
             {/* Hidden but accessible range input (keyboard). Inverted so that up increases */}

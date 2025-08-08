@@ -1,30 +1,27 @@
 "use client";
 
-import { usePlayer } from "@/components/context/PlayerContext/PlayerContext";
+import { usePlayerStore } from "@/components/context/PlayerContext/store";
 import { AnimatePresence, motion } from "framer-motion";
-import { DesktopPlayer } from "./DesktopPlayer";
 import { FullScreenPlayer } from "./FullScreenPlayer";
-import { MobilePlayer } from "./MobilePlayer";
+import { DesktopPlayer } from "./DesktopPlayer"; // now unified component
 
 export default function Controller() {
-  const { trackList } = usePlayer();
+  const trackListLength = usePlayerStore((s) => s.trackList.length);
+  const isMaximized = usePlayerStore((s) => s.isMaximized);
   return (
     <>
       <FullScreenPlayer />
-
       <AnimatePresence mode="wait">
-        {trackList.length > 0 && (
+        {trackListLength > 0 && (
           <motion.div
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
-            transition={{
-              duration: 0.5,
-              ease: "easeInOut",
-            }}
-            className="flex gap-5 bg-neutral-950/95 p-3 md:relative md:bottom-auto md:bg-neutral-950/70 md:backdrop-blur-none"
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className={`flex w-full flex-col bg-black/90 p-3 transition-colors md:relative md:bottom-auto md:bg-black/95 md:backdrop-blur-none ${
+              isMaximized ? "z-50 !bg-black/5" : ""
+            }`}
           >
-            <MobilePlayer />
             <DesktopPlayer />
           </motion.div>
         )}

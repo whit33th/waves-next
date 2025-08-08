@@ -73,7 +73,7 @@ export default function AddTrackPage() {
       cover: coverImg as File,
     });
 
-    const tracks = await createTracks({
+    await createTracks({
       userId: user,
       albumId: album,
       trackList: trackList,

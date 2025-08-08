@@ -1,14 +1,10 @@
 "use client";
-import { usePlayer } from "@/components/context/PlayerContext/PlayerContext";
-import { api } from "@/convex/_generated/api";
-import { FunctionReturnType } from "convex/server";
-import { Pause, Play } from "lucide-react";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-
-type GetTracksResult = FunctionReturnType<typeof api.tracks.getTracks>;
-type Track = GetTracksResult extends Array<infer T> ? T : never;
+import { Pause, Play } from "lucide-react";
+import { usePlayerStore } from "@/components/context/PlayerContext/store";
+import { Track } from "@/helpers/constants/Interfaces/playerContext";
 
 export default function SongItem({
   track: song,
@@ -17,8 +13,10 @@ export default function SongItem({
   track: Track;
   index: number;
 }) {
-  const { isPlaying, handlePlayTrack, trackList, currentTrackIndex } =
-    usePlayer();
+  const isPlaying = usePlayerStore((s) => s.isPlaying);
+  const handlePlayTrack = usePlayerStore((s) => s.handlePlayTrack);
+  const trackList = usePlayerStore((s) => s.trackList);
+  const currentTrackIndex = usePlayerStore((s) => s.currentTrackIndex);
 
   const isCurrentTrack = currentTrackIndex === index;
   const showAsPlaying = isCurrentTrack;
@@ -34,9 +32,9 @@ export default function SongItem({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.1, delay: index * 0.1, ease: "easeInOut" }}
         onDoubleClick={handlePlay}
-        className={`group flex cursor-pointer items-center justify-between gap-4 rounded-lg p-2 transition select-none hover:bg-neutral-900 ${currentTrackIndex > index ? "hidden" : "block"} ${
-          showAsPlaying ? "bg-neutral-800" : ""
-        }`}
+        className={`group flex cursor-pointer items-center justify-between gap-4 rounded-lg p-2 transition select-none hover:bg-neutral-900 ${
+          currentTrackIndex > index ? "hidden" : "block"
+        } ${showAsPlaying ? "bg-neutral-800" : ""}`}
       >
         <div className="flex min-w-0 flex-1 gap-4">
           <div

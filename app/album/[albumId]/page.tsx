@@ -1,5 +1,5 @@
 "use client";
-import { usePlayer } from "@/components/context/PlayerContext/PlayerContext";
+import { usePlayerStore } from "@/components/context/PlayerContext/store";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { Track } from "@/helpers/constants/Interfaces/playerContext";
@@ -17,7 +17,8 @@ interface AlbumPageProps {
 }
 
 export default function AlbumPage({ params }: AlbumPageProps) {
-  const { handleSetTrackList, handlePlayTrack } = usePlayer();
+  const handleSetTrackList = usePlayerStore((s) => s.handleSetTrackList);
+  const handlePlayTrack = usePlayerStore((s) => s.handlePlayTrack);
   const { albumId } = use(params);
 
   const album = useQuery(api.albums.getAlbumById, {
@@ -65,14 +66,24 @@ export default function AlbumPage({ params }: AlbumPageProps) {
 
   return (
     <div
-      className="space-y-8"
+      className="space-y-8 !p-0"
       style={
         palette && {
           background: `linear-gradient(180deg, ${palette?.[0]}30, ${palette?.[1]}20, ${palette?.[2]}10, ${palette?.[3]}05, ${palette?.[4]}00)`,
         }
       }
     >
-      <div className="flex flex-col flex-wrap items-start gap-8 md:flex-row">
+      <div className="relative flex flex-col flex-wrap items-end gap-8 p-6 md:flex-row">
+        <figure className="absolute inset-0 z-[-1]">
+          <Image
+            src={album.coverUrl || "/placeholder-image.jpg"}
+            alt={album.title}
+            width={100}
+            height={100}
+            className="h-full w-full object-cover opacity-50 blur-xl"
+          />
+        </figure>
+
         <div className="group relative flex w-full flex-shrink-0 items-center transition-all duration-300 ease-in-out md:w-fit">
           <div className="relative mx-auto h-64 w-64 md:mx-0 md:h-80 md:w-80">
             <div className="absolute inset-0 overflow-hidden rounded-full opacity-0 transition-all duration-1000 ease-in-out group-hover:scale-105 group-hover:opacity-100">
@@ -97,16 +108,13 @@ export default function AlbumPage({ params }: AlbumPageProps) {
           </div>
         </div>
 
-        <div className="flex-1 space-y-6">
+        <div className="flex h-full flex-col justify-between">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <p className="mb-2 text-sm tracking-wide text-neutral-400 uppercase">
-              Album
-            </p>
-            <h1 className="mb-4 text-4xl leading-tight font-bold text-white md:text-6xl">
+            <h1 className="mb-4 text-4xl leading-tight font-bold text-white md:text-5xl">
               {album.title}
             </h1>
 
@@ -145,7 +153,7 @@ export default function AlbumPage({ params }: AlbumPageProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.6 }}
-        className="space-y-4"
+        className="space-y-4 p-6"
       >
         <h2 className="mb-6 text-2xl font-semibold text-white">Tracks</h2>
 

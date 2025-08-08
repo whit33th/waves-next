@@ -36,6 +36,8 @@ export interface IPlayerContextType {
 
   isMaximized: boolean;
   setIsMaximized: (value: boolean) => void;
+  queueIsOpen: boolean; // NEW
+  setQueueIsOpen: (value: boolean) => void; // NEW
 
   // Actions
   play: () => void;

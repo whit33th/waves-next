@@ -1,9 +1,10 @@
 "use client";
 
+import { useEffect } from "react";
+import { usePlayerStore } from "@/components/context/PlayerContext/store";
+import { usePlayerBase } from "@/components/context/PlayerContext/PlayerContext";
 import AnimatedBackground from "@/components/UI/AnimatedBackground";
-import { ControlButton } from "@/components/UI/buttons/ControlButton";
-import DurationRange from "@/components/UI/durationRange/durationRange";
-import { usePlayer } from "@/components/context/PlayerContext/PlayerContext";
+import { unstable_Activity as Activity } from "react";
 import {
   Ellipsis,
   FastForward,
@@ -15,28 +16,24 @@ import {
   Shuffle,
 } from "lucide-react";
 import Image from "next/image";
-import { unstable_Activity as Activity, useEffect } from "react";
+import DurationRange from "@/components/UI/durationRange/durationRange";
+import { ControlButton } from "@/components/UI/buttons/ControlButton";
 
 export function FullScreenPlayer() {
-  const {
-    trackList,
-    currentTrackIndex,
-    isPlaying,
-    previousTrack,
-    nextTrack,
-    play,
-    pause,
-    isFullPlayerOpen,
-    isShuffle,
-    setIsShuffle,
-    setIsFullPlayerOpen,
-    setIsLyricsOpen,
-    handleRepeat,
-    volume,
-    handleVolumeChange,
-    handleMute,
-    repeatMode,
-  } = usePlayer();
+  const isFullPlayerOpen = usePlayerStore((s) => s.isFullPlayerOpen);
+  const setIsFullPlayerOpen = usePlayerStore((s) => s.setIsFullPlayerOpen);
+  const trackList = usePlayerStore((s) => s.trackList);
+  const currentTrackIndex = usePlayerStore((s) => s.currentTrackIndex);
+  const isPlaying = usePlayerStore((s) => s.isPlaying);
+  const play = usePlayerStore((s) => s.play);
+  const pause = usePlayerStore((s) => s.pause);
+  const nextTrack = usePlayerStore((s) => s.nextTrack);
+  const isShuffle = usePlayerStore((s) => s.isShuffle);
+  const setIsShuffle = usePlayerStore((s) => s.setIsShuffle);
+  const repeatMode = usePlayerStore((s) => s.repeatMode);
+  const handleRepeat = usePlayerStore((s) => s.handleRepeat);
+  const volume = usePlayerStore((s) => s.volume);
+  const { previousTrack, handleMute, handleVolumeChange } = usePlayerBase();
 
   useEffect(() => {
     const handleResize = () => {

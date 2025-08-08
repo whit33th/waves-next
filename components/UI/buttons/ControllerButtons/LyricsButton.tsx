@@ -1,5 +1,5 @@
 "use client";
-import { Text } from "lucide-react";
+import { Mic2 } from "lucide-react";
 
 interface LyricsButtonProps {
   isOpen: boolean;
@@ -9,7 +9,8 @@ interface LyricsButtonProps {
 export function LyricsButton({ isOpen, onClick }: LyricsButtonProps) {
   return (
     <button onClick={onClick} className="transition-opacity hover:opacity-80">
-      <Text
+      <Mic2
+        size={20}
         className={`${isOpen ? "opacity-100" : "opacity-60"} text-neutral-300`}
       />
     </button>

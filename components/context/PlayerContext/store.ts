@@ -21,6 +21,7 @@ interface PlayerStore {
   isLyricsOpen: boolean;
   isMaximized: boolean;
   isFullPlayerOpen: boolean;
+  queueIsOpen: boolean; // NEW
 
   // Setters
   setIsPlaying: (value: boolean) => void;
@@ -33,6 +34,7 @@ interface PlayerStore {
   setIsLyricsOpen: (value: boolean) => void;
   setIsMaximized: (value: boolean) => void;
   setIsFullPlayerOpen: (value: boolean) => void;
+  setQueueIsOpen: (value: boolean) => void; // NEW
 
   // Actions
   handleSetTrackList: (tracks: Track[]) => void;
@@ -40,6 +42,7 @@ interface PlayerStore {
   play: () => void;
   pause: () => void;
   nextTrack: () => void;
+  handleRepeat: () => void;
 
   // Helpers
   formatTime: (timeInSeconds: number) => {
@@ -65,6 +68,7 @@ export const usePlayerStore = create<PlayerStore>()(
       isLyricsOpen: false,
       isMaximized: false,
       isFullPlayerOpen: false,
+      queueIsOpen: true, // default open like previous behaviour
 
       setIsPlaying: (value) => set({ isPlaying: value }),
       setTrackList: (tracks) => set({ trackList: tracks }),
@@ -76,6 +80,7 @@ export const usePlayerStore = create<PlayerStore>()(
       setIsLyricsOpen: (value) => set({ isLyricsOpen: value }),
       setIsMaximized: (value) => set({ isMaximized: value }),
       setIsFullPlayerOpen: (value) => set({ isFullPlayerOpen: value }),
+      setQueueIsOpen: (value) => set({ queueIsOpen: value }),
 
       handleSetTrackList: (tracks) => {
         set({ trackList: tracks, currentTrackIndex: 0, isPlaying: true });
@@ -139,6 +144,7 @@ export const usePlayerStore = create<PlayerStore>()(
         isLyricsOpen: state.isLyricsOpen,
         isMaximized: state.isMaximized,
         isFullPlayerOpen: state.isFullPlayerOpen,
+        queueIsOpen: state.queueIsOpen,
         // Не сохраняем isPlaying и time, так как они должны сбрасываться при перезагрузке
       }),
     },

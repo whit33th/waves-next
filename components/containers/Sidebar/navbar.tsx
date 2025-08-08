@@ -1,6 +1,5 @@
 "use client";
 
-
 import { Flame, Home, Library, Podcast, Radio } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -31,7 +30,7 @@ const NavMenu = () => {
             pathname === item.href ? "text-white" : "text-neutral-400"
           }`}
         >
-          {item.icon }
+          {item.icon}
           <span className="text-xs md:hidden">{item.label}</span>
         </Link>
       ))}
@@ -40,7 +39,7 @@ const NavMenu = () => {
 };
 
 const Logo = (
-  <div className="h-9 w-9 cursor-pointer">
+  <Link href={"/profile"}>
     <Image
       src={"/reference/ref.png"}
       alt="Your logo"
@@ -48,20 +47,17 @@ const Logo = (
       height={36}
       className="aspect-square rounded-full"
     />
-  </div>
+  </Link>
 );
 
 export default function Navbar() {
   return (
-    <nav className="bg-darker order-3 flex-shrink-0 md:order-1 md:h-full">
-      <div className="border-border bg-darker z-40 flex flex-row items-center justify-center gap-x-6 border-t px-4 py-3 backdrop-blur-sm md:relative md:right-auto md:bottom-auto md:left-auto md:z-auto md:h-full md:flex-col md:items-center md:justify-between md:gap-x-0 md:gap-y-7 md:border-t-0 md:border-r md:p-2 md:backdrop-blur-none">
-        <div className="hidden md:flex md:flex-col md:gap-y-4">
-          {/* <VibeMeter /> */}
-        </div>
+    <nav className="border-border z-40 flex flex-row items-center justify-center gap-x-6 border-t bg-black/90 px-4 py-3 backdrop-blur-sm md:relative md:right-auto md:bottom-auto md:left-auto md:z-auto md:h-full md:flex-col md:items-center md:justify-between md:gap-x-0 md:gap-y-7 md:border-t-0 md:p-2 md:backdrop-blur-none">
+      {Logo}
+      <NavMenu />
 
-        <NavMenu />
-
-        {Logo}
+      <div className="hidden md:flex md:flex-col md:gap-y-4">
+        {/* <VibeMeter /> */}
       </div>
     </nav>
   );

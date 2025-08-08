@@ -1,98 +1,104 @@
 "use client";
 
-import { IPlayerContextType } from "@/helpers/constants/Interfaces/playerContext";
-import { createContext, ReactNode, useContext, useRef } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useRef,
+  useCallback,
+  useMemo,
+} from "react";
 import SideEffects from "./SideEffects";
 import { usePlayerStore } from "./store";
 
-const PlayerContext = createContext<IPlayerContextType | undefined>(undefined);
+interface PlayerContextValue {
+  audioRef: React.RefObject<HTMLAudioElement | null>;
+  durationRef: React.RefObject<HTMLDivElement | null>;
+  durationBodyRef: React.RefObject<HTMLInputElement | null>;
+  volumeRef: React.RefObject<HTMLInputElement | null>;
+  handleSeek: (value: number) => void;
+  handleVolumeChange: (value: number) => void;
+  handleMute: () => void;
+  previousTrack: () => void;
+}
+
+const PlayerContext = createContext<PlayerContextValue | undefined>(undefined);
 
 export function PlayerProvider({ children }: { children: ReactNode }) {
-  // --- Refs ---
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const durationRef = useRef<HTMLDivElement>(null);
-  const durationBodyRef = useRef<HTMLInputElement>(null);
-  const volumeRef = useRef<HTMLInputElement>(null);
+  // Refs
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const durationRef = useRef<HTMLDivElement | null>(null);
+  const durationBodyRef = useRef<HTMLInputElement | null>(null);
+  const volumeRef = useRef<HTMLInputElement | null>(null);
 
-  // --- Helpers ---
-  const formatTime = (timeInSeconds: number) => ({
-    minute: Math.floor(timeInSeconds / 60),
-    second: Math.floor(timeInSeconds % 60),
-    millisecond: Math.floor((timeInSeconds % 1) * 1000),
-  });
-
-  // --- Audio Controls ---
-  const handleSeek = (value: number) => {
+  // Audio control helpers (use store imperatively)
+  const handleSeek = useCallback((value: number) => {
     const audio = audioRef.current;
     if (audio && audio.duration) {
       const seekTime = (value / 100) * audio.duration;
       audio.currentTime = seekTime;
     }
-  };
+  }, []);
 
-  const handleVolumeChange = (value: number) => {
+  const handleVolumeChange = useCallback((value: number) => {
     const audio = audioRef.current;
     if (audio) {
       const newVolume = value / 100;
       audio.volume = newVolume;
-      store.setVolume(newVolume * 100);
+      usePlayerStore.setState({ volume: value });
     }
-  };
+  }, []);
 
-  const handleMute = () => {
-    const audio = audioRef.current;
-    if (audio) {
-      if (audio.volume > 0) {
-        audio.volume = 0;
-        store.setVolume(0);
-      } else {
-        audio.volume = 0.5;
-        store.setVolume(50);
-      }
-    }
-  };
-
-  const previousTrack = () => {
+  const handleMute = useCallback(() => {
     const audio = audioRef.current;
     if (!audio) return;
-
-    if (audio.currentTime > 10 || store.currentTrackIndex === 0) {
-      audio.currentTime = 0;
-      store.setTime({
-        current: { second: 0, minute: 0, millisecond: 0 },
-        duration: store.time.duration,
-      });
-    } else if (store.currentTrackIndex > 0) {
-      store.setTime({
-        current: { second: 0, minute: 0, millisecond: 0 },
-        duration: store.time.duration,
-      });
-      store.setCurrentTrackIndex(store.currentTrackIndex - 1);
-      store.setIsPlaying(true);
+    if (audio.volume > 0) {
+      audio.volume = 0;
+      usePlayerStore.setState({ volume: 0 });
+    } else {
+      audio.volume = 0.5;
+      usePlayerStore.setState({ volume: 50 });
     }
-  };
+  }, []);
 
-  // zustand store
-  const store = usePlayerStore();
+  const previousTrack = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    const { currentTrackIndex, time } = usePlayerStore.getState();
+    if (audio.currentTime > 10 || currentTrackIndex === 0) {
+      audio.currentTime = 0;
+      usePlayerStore.setState({
+        time: {
+          current: { second: 0, minute: 0, millisecond: 0 },
+          duration: time.duration,
+        },
+      });
+    } else if (currentTrackIndex > 0) {
+      audio.currentTime = 0;
+      usePlayerStore.setState({
+        currentTrackIndex: currentTrackIndex - 1,
+        isPlaying: true,
+        time: {
+          current: { second: 0, minute: 0, millisecond: 0 },
+          duration: time.duration,
+        },
+      });
+    }
+  }, []);
 
-  // value для контекста
-  const value = {
-    ...store,
-    audioRef,
-    durationRef,
-    durationBodyRef,
-    volumeRef,
-    formatTime,
-    handleSeek,
-    handleVolumeChange,
-    handleMute,
-    previousTrack,
-    handleRepeat: () => {
-      const currentMode = store.repeatMode;
-      const newMode = currentMode < 2 ? currentMode + 1 : 0;
-      store.setRepeatMode(newMode as 0 | 1 | 2);
-    },
-  };
+  const value = useMemo<PlayerContextValue>(
+    () => ({
+      audioRef,
+      durationRef,
+      durationBodyRef,
+      volumeRef,
+      handleSeek,
+      handleVolumeChange,
+      handleMute,
+      previousTrack,
+    }),
+    [handleSeek, handleVolumeChange, handleMute, previousTrack],
+  );
 
   return (
     <PlayerContext.Provider value={value}>
@@ -103,10 +109,16 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function usePlayer() {
-  const context = useContext(PlayerContext);
-  if (context === undefined) {
-    throw new Error("usePlayer must be used within a PlayerProvider");
-  }
-  return context;
+export function usePlayerBase() {
+  const ctx = useContext(PlayerContext);
+  if (!ctx) throw new Error("usePlayerBase must be used within PlayerProvider");
+  return ctx;
 }
+
+// Legacy compatibility hook (remove usages gradually)
+export const usePlayer = () => {
+  return {
+    ...usePlayerStore(), // NOTE: components should migrate to selective selectors to avoid re-renders
+    ...usePlayerBase(),
+  };
+};

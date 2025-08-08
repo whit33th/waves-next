@@ -1,29 +1,29 @@
-const playlists = [
-  {
-    title: "Favorite Tracks",
-    subtitle: "Made for you",
-    imageUrl: "/img/albums/arcane.png",
-    type: "playlist" as const,
-  },
-  {
-    title: "Recently Played",
-    subtitle: "Your history",
-    imageUrl: "/img/albums/ogbuda.png",
-    type: "playlist" as const,
-  },
-  {
-    title: "My Playlist #1",
-    subtitle: "42 tracks",
-    imageUrl: "/img/albums/szn.png",
-    type: "playlist" as const,
-  },
-  {
-    title: "Rock Collection",
-    subtitle: "67 tracks",
-    imageUrl: "/img/albums/image.png",
-    type: "album" as const,
-  },
-];
+// const playlists = [
+//   {
+//     title: "Favorite Tracks",
+//     subtitle: "Made for you",
+//     imageUrl: "/img/albums/arcane.png",
+//     type: "playlist" as const,
+//   },
+//   {
+//     title: "Recently Played",
+//     subtitle: "Your history",
+//     imageUrl: "/img/albums/ogbuda.png",
+//     type: "playlist" as const,
+//   },
+//   {
+//     title: "My Playlist #1",
+//     subtitle: "42 tracks",
+//     imageUrl: "/img/albums/szn.png",
+//     type: "playlist" as const,
+//   },
+//   {
+//     title: "Rock Collection",
+//     subtitle: "67 tracks",
+//     imageUrl: "/img/albums/image.png",
+//     type: "album" as const,
+//   },
+// ];
 
 export default function LibraryPage() {
   return (
