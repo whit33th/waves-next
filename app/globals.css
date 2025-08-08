@@ -1,13 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  --background: #080808;
+  --background: #040404;
   --foreground: #ededed;
 
+  --color-bg: #040404;
   --color-primary: #ffcf01;
   --color-secondary: #f037a5;
   --color-dark: #121212;
-  --color-border: #121212;
+  --color-border: #080808;
   --color-darker: #080808;
   --color-light-dark: #242424;
   --color-text-primary: #ffffff;
@@ -19,13 +20,6 @@
 }
 * {
   line-height: 1;
-}
-@layer base {
-  .controller {
-    @apply rounded-lg bg-black p-4 text-white;
-    background: var(--background);
-    /* color: var(--foreground); */
-  }
 }
 
 /* Скрытие скроллбара */

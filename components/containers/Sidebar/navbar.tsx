@@ -52,7 +52,7 @@ const Logo = (
 
 export default function Navbar() {
   return (
-    <nav className="border-border z-40 flex flex-row items-center justify-center gap-x-6 border-t bg-black/90 px-4 py-3 backdrop-blur-sm md:relative md:right-auto md:bottom-auto md:left-auto md:z-auto md:h-full md:flex-col md:items-center md:justify-between md:gap-x-0 md:gap-y-7 md:border-t-0 md:p-2 md:backdrop-blur-none">
+    <nav className="border-border bg-bg z-40 flex flex-row items-center justify-center gap-x-6 border-t border-r px-4 py-3 backdrop-blur-sm md:relative md:right-auto md:bottom-auto md:left-auto md:z-auto md:h-full md:flex-col md:items-center md:justify-between md:gap-x-0 md:gap-y-7 md:border-t-0 md:p-2 md:backdrop-blur-none">
       {Logo}
       <NavMenu />
 

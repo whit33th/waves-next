@@ -67,14 +67,14 @@ export default function AlbumPage({ params }: AlbumPageProps) {
   return (
     <div
       className="space-y-8 !p-0"
-      style={
-        palette && {
-          background: `linear-gradient(180deg, ${palette?.[0]}30, ${palette?.[1]}20, ${palette?.[2]}10, ${palette?.[3]}05, ${palette?.[4]}00)`,
-        }
-      }
+      // style={
+      //   palette && {
+      //     background: `linear-gradient(180deg, ${palette?.[0]}30, ${palette?.[1]}20, ${palette?.[2]}10, ${palette?.[3]}05, ${palette?.[4]}00)`,
+      //   }
+      // }
     >
       <div className="relative flex flex-col flex-wrap items-end gap-8 p-6 md:flex-row">
-        <figure className="absolute inset-0 z-[-1]">
+        <figure className="absolute inset-0 z-[-1] overflow-hidden rounded-lg">
           <Image
             src={album.coverUrl || "/placeholder-image.jpg"}
             alt={album.title}
@@ -83,6 +83,7 @@ export default function AlbumPage({ params }: AlbumPageProps) {
             className="h-full w-full object-cover opacity-50 blur-xl"
           />
         </figure>
+        {/* <div className="from-input-bg absolute inset-0 z-[-1] bg-gradient-to-t to-transparent"></div> */}
 
         <div className="group relative flex w-full flex-shrink-0 items-center transition-all duration-300 ease-in-out md:w-fit">
           <div className="relative mx-auto h-64 w-64 md:mx-0 md:h-80 md:w-80">
@@ -96,7 +97,7 @@ export default function AlbumPage({ params }: AlbumPageProps) {
               />
             </div>
 
-            <div className="relative h-full w-full overflow-hidden rounded-full shadow-2xl">
+            <div className="relative h-full w-full overflow-hidden rounded-full shadow-xl">
               <Image
                 src={album.coverUrl || "/placeholder-image.jpg"}
                 alt={album.title}

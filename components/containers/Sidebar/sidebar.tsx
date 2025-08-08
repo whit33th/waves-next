@@ -8,12 +8,13 @@ import Navbar from "./navbar";
 export default function Sidebar({ children }: React.PropsWithChildren) {
   return (
     <div className="flex h-screen flex-col overflow-hidden">
-      <div className="flex flex-1 flex-col overflow-hidden md:flex-row">
+      <div className="relative flex flex-1 flex-col overflow-hidden md:flex-row">
+        {/* added relative for absolute Queue */}
         <div className="hidden md:block">
           <Navbar />
         </div>
 
-        <main className="flex-1 overflow-auto overflow-x-hidden">
+        <main className="flex-1 overflow-auto">
           <Search />
 
           <div className="*:p-6">{children}</div>

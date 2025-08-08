@@ -13,10 +13,13 @@ export default function Queue() {
   const setTrackList = usePlayerStore((s) => s.setTrackList);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
+  // width of panel
+  const panelWidth = 320;
+
   const slideVariants = {
-    initial: { x: 320 },
+    initial: { x: panelWidth },
     animate: { x: 0 },
-    exit: { x: 320 },
+    exit: { x: panelWidth },
   };
 
   return (
@@ -63,7 +66,7 @@ export default function Queue() {
         )}
       </AnimatePresence>
 
-      {/* Desktop sidebar queue */}
+      {/* Desktop absolute overlay queue */}
       <AnimatePresence mode="wait">
         {queueIsOpen && trackList.length > 0 && (
           <motion.div
@@ -72,7 +75,8 @@ export default function Queue() {
             animate="animate"
             exit="exit"
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="hidden h-full w-80 flex-col bg-black/90 md:flex"
+            style={{ width: panelWidth }}
+            className="border-border bg-bg/95 absolute top-0 right-0 z-40 hidden h-full flex-col border-l shadow-xl backdrop-blur-xs md:flex"
           >
             <div className="border-border flex items-center justify-between border-b p-4">
               <span className="text-sm text-neutral-400">
@@ -87,7 +91,7 @@ export default function Queue() {
               </button>
             </div>
 
-            <div className="flex max-h-screen flex-col p-4">
+            <div className="flex max-h-screen flex-col overflow-y-auto p-4">
               {trackList.length === 0 ? (
                 <div className="text-center text-neutral-400">No tracks</div>
               ) : (

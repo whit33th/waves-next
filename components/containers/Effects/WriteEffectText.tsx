@@ -54,7 +54,7 @@ export default function WriteEffectText({
         damping: 12,
         duration: 0.8,
       }}
-      className="text-center"
+      className="inline-block text-center"
     >
       {result}
     </motion.p>

@@ -17,16 +17,41 @@ export default function SideEffects() {
 
   const pathname = usePathname();
 
-  // 1. Track change: set src and load
+  // 1. Track change: set src and load (and auto play if already isPlaying)
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio || trackList.length === 0) return;
-    const newSrc = `/api/stream/${trackList[currentTrackIndex].trackUrl}`;
+    const track = trackList[currentTrackIndex];
+    if (!track) return;
+    const newSrc = `/api/stream/${track.trackUrl}`;
+    const shouldAutoplay = usePlayerStore.getState().isPlaying; // capture current state
+
     if (audio.src !== newSrc) {
+      let cancelled = false;
       audio.src = newSrc;
       audio.preload = "metadata";
       audio.crossOrigin = "anonymous";
       audio.load();
+
+      const tryPlay = () => {
+        if (!cancelled && shouldAutoplay) {
+          audio.play().catch(() => {});
+        }
+      };
+
+      // If metadata already available, try immediately; else wait events
+      if (audio.readyState >= 1) {
+        tryPlay();
+      } else {
+        audio.addEventListener("loadeddata", tryPlay, { once: true });
+        audio.addEventListener("canplay", tryPlay, { once: true });
+      }
+
+      return () => {
+        cancelled = true;
+        audio.removeEventListener("loadeddata", tryPlay);
+        audio.removeEventListener("canplay", tryPlay);
+      };
     }
   }, [trackList, currentTrackIndex, audioRef]);
 
@@ -78,13 +103,16 @@ export default function SideEffects() {
     };
   }, [audioRef, nextTrack]);
 
-  // 5. Playback control: play/pause on isPlaying or track change
+  // 5. Playback control: play/pause on isPlaying or track index change (ensures play after manual seek to new track)
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    if (isPlaying) audio.play().catch(() => {});
-    else audio.pause();
-  }, [isPlaying, audioRef]);
+    if (isPlaying) {
+      audio.play().catch(() => {});
+    } else {
+      audio.pause();
+    }
+  }, [isPlaying, currentTrackIndex, audioRef]);
 
   // 6. UI: reset maximized on route change
   useEffect(() => {

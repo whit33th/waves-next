@@ -24,7 +24,7 @@ export default function AnimatedBackground() {
             alt="background"
             width={150}
             height={150}
-            className={`animate-wave h-full w-full scale-150 object-cover blur-3xl transition-opacity duration-500 ease-in-out ${isMaximized ? "opacity-100" : "opacity-5 brightness-50 contrast-200 grayscale-100"}`}
+            className={`animate-wave h-full w-full scale-150 object-cover blur-3xl transition-opacity duration-500 ease-in-out ${isMaximized ? "opacity-100" : "opacity-5 brightness-[70%] contrast-[1000%] grayscale saturate-0"}`}
             loading="eager"
             priority
           />
